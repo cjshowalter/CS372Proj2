@@ -184,11 +184,18 @@ public:
 
 class Square : public Polygon {
 public:
-	/*Square(double sideLength) {
-	Polygon(4, sideLength);
-	}*/
 
 	Square(double sideLength) : Polygon(4, sideLength) {}
+
+private:
+
+};
+
+class Triangle : public Polygon {
+public:
+
+
+	Triangle(double sideLength) : Polygon(3, sideLength) {}
 
 private:
 

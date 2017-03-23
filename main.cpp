@@ -32,7 +32,7 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Polygon Test ***
+	// *** Square Test ***
 	Polygon p_0(5, 50);
 	std::string polyString = p_0.generatePostScript();
 	std::cout << polyString << std::endl;
