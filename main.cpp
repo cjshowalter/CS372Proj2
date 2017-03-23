@@ -14,10 +14,12 @@ int main() {
 	std::ofstream ofs;
 	ofs.open("test.ps", std::ofstream::out | std::ofstream::app);
 	ofs << "%!\n";
+
+
 	ofs << circleString;
 	ofs << "\n";
-	ofs << "showpage";
-	ofs.close();
+	ofs << "showpage\n";
+
 
 	// *** Rectangle Test ***
 	Rectangle r(20, 40);
@@ -25,28 +27,21 @@ int main() {
 	std::cout << rectangleString << std::endl;
 
 	std::ofstream ofss;
-	ofss.open("rectest.ps", std::ofstream::out | std::ofstream::app);
-	ofss << "%!\n";
-	ofss << rectangleString;
-	ofss << "\n";
-	ofss << "showpage";
-	ofss.close();
 
-	Square s(20);
+	ofs << rectangleString;
+	ofs << "\n";
+	ofs << "showpage\n";
+
 	// *** Polygon Test ***
 	Polygon p_0(5, 50);
 	std::string polyString = p_0.generatePostScript();
 	std::cout << polyString << std::endl;
 
-	std::ofstream p_0_ss;
-	ofss.open("polytest.ps", std::ofstream::out | std::ofstream::app);
-	ofss << "%!\n";
-	ofss << polyString;
-	ofss << "\n";
-	ofss << "showpage";
-	ofss.close();
+	ofs << polyString;
+	ofs << "\n";
+	ofs << "showpage\n";
 
-
+	ofs.close();
 
 	return 0;
 }
