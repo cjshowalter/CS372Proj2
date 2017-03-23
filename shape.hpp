@@ -202,4 +202,22 @@ private:
 
 };
 
+class Rotated : public Shape {
+public:
+	Rotated(Shape &shape, int rotationAngle)
+		:refShape(shape), rotAngle(rotationAngle) {}
+
+	std::string generatePostScript() override
+	{
+		std::string RotateString = std::to_string(rotAngle);
+		RotateString += " rotate\n";
+		RotateString += refShape.generatePostScript();
+
+		return RotateString;
+	}
+	Shape &refShape;
+	int rotAngle;
+private:
+};
+
 #endif // SHAPE_HPP
