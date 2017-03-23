@@ -85,8 +85,7 @@ public:
 		std::string polyString = "newpath\n";
 		polyString += std::to_string(width);
 		polyString += " ";
-		polyString += std::to_string(height);
-		polyString += " translate\n";
+		polyString += " 0 translate\n";
 		polyString += "0 0 moveto\n";
 
 		for (int i = 0; i < numSides_g; i++)
@@ -150,5 +149,50 @@ private:
 
 };
 
+class Spacer : public Shape {
+public:
+	Spacer(double w, double h) {
+		width = w;
+		height = h;
+		x = 0;
+		y = 0;
+	}
+	std::string generatePostScript() override
+	{
+	    std::string SpacerString = "newpath\n";
+		SpacerString += std::to_string(x);
+		SpacerString += " ";
+		SpacerString += std::to_string(y);
+		SpacerString += " moveto\n";
+
+		SpacerString += std::to_string(width);
+		SpacerString += " ";
+		SpacerString += std::to_string(x);
+		SpacerString += " rlineto\n";
+
+		SpacerString += std::to_string(y);
+		SpacerString += " ";
+		SpacerString += std::to_string(height);
+		SpacerString += " rlineto\n";
+
+		SpacerString += std::to_string(-width);
+		SpacerString += " ";
+		SpacerString += std::to_string(x);
+		SpacerString += " rlineto closepath\n";
+		return SpacerString;
+	}
+};
+
+class Square : public Polygon {
+public:
+	/*Square(double sideLength) {
+	Polygon(4, sideLength);
+	}*/
+
+	Square(double sideLength) : Polygon(4, sideLength) {}
+
+private:
+
+};
 
 #endif // SHAPE_HPP
