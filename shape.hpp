@@ -44,8 +44,6 @@ public:
 		return circleString;
 	}
 
-	width 2 div height 2 div width 2 div 0 360 arc closepath
-
 
 private:
 
@@ -56,6 +54,49 @@ public:
 	Polygon(double numSides, double sideLength) {
 		
 	}
+
+private:
+
+};
+
+class Rectangle : public Shape {
+public:
+	Rectangle(double w, double h) {
+		height = h;
+		width = w;
+		//std::string generatePostScript = "0";
+	}
+	std::string generatePostScript() override
+	{
+		std::string rectangleString = "";
+		rectangleString += "0";
+		rectangleString += " ";
+		rectangleString += "0";
+		rectangleString += " moveto\n";
+		
+		rectangleString += std::to_string(width);
+		rectangleString += " ";
+		rectangleString += "0";     					// Bottom
+		rectangleString += " ";
+		rectangleString += "rlineto ";
+
+		rectangleString += "0";
+		rectangleString += " ";
+		rectangleString += std::to_string(height);      // Right
+		rectangleString += " ";
+		rectangleString += "rlineto ";
+
+		rectangleString += std::to_string(width*-1);
+		rectangleString += " ";
+		rectangleString += "0";      					// Bottom
+		rectangleString += " ";
+		rectangleString += "rlineto ";
+
+		rectangleString += "closepath\n";
+		rectangleString += "stroke\n";
+		return rectangleString;
+	}
+
 
 private:
 
