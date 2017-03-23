@@ -3,6 +3,8 @@
 
 #include <string>
 #include <cmath>
+#include <vector>
+
 
 class Shape {
 
@@ -201,5 +203,27 @@ public:
 private:
 
 };
+
+
+
+
+
+
+class Layered : public Shape
+{
+public:
+    std::string generatePostScript( std::vector<Shape*> shapeList )
+    {
+        std::string SpacerString = "newpath\n";
+        for(auto i=0; i<shapeList.size(); ++i)
+        {
+            SpacerString += shapeList[i]->generatePostScript();
+        }
+        return SpacerString;
+    }
+private:
+
+};
+
 
 #endif // SHAPE_HPP

@@ -4,6 +4,9 @@
 #include "shape.hpp"
 #include <iostream>
 #include <fstream>      // std::ofstream
+#include <vector>
+
+
 int main() {
 
 	// *** Circle Test ***
@@ -54,6 +57,12 @@ int main() {
 	ofs << squString;
 	ofs << "\n";
 	ofs << "showpage\n";
+
+    /*
+	std::vector<Shape*> vectorShapes = {c, r, p_0, squ};
+	ofs << Layered::generatePostScript(vectorShapes);
+    */
+
 
 	ofs.close();
 
