@@ -193,4 +193,19 @@ private:
 
 };
 
+
+class Scaled : public Shape {
+public:
+	Scaled(Shape &shape, double fx, double fy){
+	    std::string s = shape.generatePostScript();
+		ScaleString = std::to_string(fx) + " " + std::to_string(fy) + " scale\n";
+		ScaleString += s;
+	}
+	std::string generatePostScript() override{
+		return ScaleString;
+	}
+private:
+	std::string ScaleString;
+};
+
 #endif // SHAPE_HPP
