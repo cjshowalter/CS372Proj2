@@ -7,10 +7,10 @@
 class Shape {
 
 public:
-	virtual ~Shape()=default;
+	virtual ~Shape() = default;
 	//virtual double height()=0;
 	//virtual double width()=0;
-	virtual std::string generatePostScript()=0;
+	virtual std::string generatePostScript() = 0;
 	double height;
 	double width;
 	double x;
@@ -21,8 +21,8 @@ private:
 class Circle : public Shape {
 public:
 	Circle(double radius) {
-		height = radius*2;
-		width = radius*2;
+		height = radius * 2;
+		width = radius * 2;
 		x = 0;
 		y = 0;
 		//std::string generatePostScript = "0";
@@ -34,11 +34,11 @@ public:
 		circleString += " ";
 		circleString += std::to_string(y);
 		circleString += " translate\n";
-		circleString += std::to_string(height/2);
+		circleString += std::to_string(height / 2);
 		circleString += " ";
-		circleString += std::to_string(width/2);
+		circleString += std::to_string(width / 2);
 		circleString += " \n";
-		circleString += std::to_string(width/2);
+		circleString += std::to_string(width / 2);
 		circleString += " 0 360 arc closepath\n";
 		circleString += "stroke\n";
 		return circleString;
@@ -53,25 +53,55 @@ class Polygon : public Shape {
 public:
 	Polygon(int numSides, double sideLength)
 	{
-        const double pi = 3.141592653589793238;
+		sideLength_g = sideLength;
+		numSides_g = numSides;
+		const double pi = 3.141592653589793238;
 
-		if( numSides%2 == 1 )
-        {
-            height = sideLength*(1+cos(pi/numSides))/(2*sin(pi/numSides));
-            width = (sideLength*sin(pi*(numSides-1)/(2*numSides))/(sin(pi/numSides)));
-        }
-        else if(numSides%4 != 0) // numSides%2==0
-        {
-            height = sideLength * (cos(pi/numSides))/(sin(pi/numSides));
-            width = sideLength/(sin(pi/numSides));
-        }
-        else // numSides%2 == 0 && numSides%4 == 0
-        {
-            height = sideLength*(cos(pi/numSides))/(sin(pi/numSides));
-            width = height;
-        }
+		if (numSides % 2 == 1)
+		{
+			height = sideLength*(1 + cos(pi / numSides)) / (2 * sin(pi / numSides));
+			width = (sideLength*sin(pi*(numSides - 1) / (2 * numSides)) / (sin(pi / numSides)));
+		}
+		else if (numSides % 4 != 0) // numSides%2==0
+		{
+			height = sideLength * (cos(pi / numSides)) / (sin(pi / numSides));
+			width = sideLength / (sin(pi / numSides));
+		}
+		else // numSides%2 == 0 && numSides%4 == 0
+		{
+			height = sideLength*(cos(pi / numSides)) / (sin(pi / numSides));
+			width = height;
+		}
 	}
+	std::string generatePostScript() override
+	{
 
+		int totalAngle = (numSides_g - 2) * 180;
+		int anglePerSide = 180 - totalAngle / numSides_g;
+		std::string sideAngle = std::to_string(anglePerSide);
+
+		std::string myLength = std::to_string(sideLength_g);
+		std::string polyString = "newpath\n";
+		polyString += std::to_string(width);
+		polyString += " ";
+		polyString += std::to_string(height);
+		polyString += " translate\n";
+		polyString += "0 0 moveto\n";
+
+		for (int i = 0; i < numSides_g; i++)
+		{
+			polyString += "0 " + myLength + " lineto\n";
+			polyString += "0 " + myLength + " translate\n";
+			polyString += sideAngle + " rotate\n";
+
+		}
+		polyString += "closepath\n";
+		polyString += "stroke\n";
+
+		return polyString;
+	}
+	double sideLength_g;
+	double numSides_g;
 private:
 
 };
