@@ -51,6 +51,7 @@ private:
 
 class Polygon : public Shape {
 public:
+	Polygon()=default;
 	Polygon(int numSides, double sideLength)
 	{
 		sideLength_g = sideLength;
@@ -84,8 +85,7 @@ public:
 		std::string polyString = "newpath\n";
 		polyString += std::to_string(width);
 		polyString += " ";
-		polyString += std::to_string(height);
-		polyString += " translate\n";
+		polyString += " 0 translate\n";
 		polyString += "0 0 moveto\n";
 
 		for (int i = 0; i < numSides_g; i++)
@@ -185,14 +185,22 @@ public:
 
 class Square : public Polygon {
 public:
-	Square(double sideLength) {
-		Polygon(4, sideLength);
-	}
+
+	Square(double sideLength) : Polygon(4, sideLength) {}
 
 private:
 
 };
 
+class Triangle : public Polygon {
+public:
+
+
+	Triangle(double sideLength) : Polygon(3, sideLength) {}
+
+private:
+
+};
 
 class Scaled : public Shape {
 public:
@@ -206,6 +214,23 @@ public:
 	}
 private:
 	std::string ScaleString;
+
+class Rotated : public Shape {
+public:
+	Rotated(Shape &shape, int rotationAngle)
+		:refShape(shape), rotAngle(rotationAngle) {}
+
+	std::string generatePostScript() override
+	{
+		std::string RotateString = std::to_string(rotAngle);
+		RotateString += " rotate\n";
+		RotateString += refShape.generatePostScript();
+
+		return RotateString;
+	}
+	Shape &refShape;
+	int rotAngle;
+private:
 };
 
 #endif // SHAPE_HPP

@@ -27,17 +27,31 @@ int main() {
 	std::cout << rectangleString << std::endl;
 
 	std::ofstream ofss;
+	ofss.open("rectest.ps", std::ofstream::out | std::ofstream::app);
+	ofss << "%!\n";
+	ofss << rectangleString;
+	ofss << "\n";
+	ofss << "showpage";
+	ofss.close();
 
 	ofs << rectangleString;
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Polygon Test ***
+	// *** Square Test ***
 	Polygon p_0(5, 50);
 	std::string polyString = p_0.generatePostScript();
 	std::cout << polyString << std::endl;
 
 	ofs << polyString;
+	ofs << "\n";
+	ofs << "showpage\n";
+
+	Square squ(100);
+	std::string squString = squ.generatePostScript();
+	std::cout << squString << std::endl;
+
+	ofs << squString;
 	ofs << "\n";
 	ofs << "showpage\n";
 
