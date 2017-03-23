@@ -32,6 +32,8 @@ int main() {
 	ofss << "showpage";
 	ofss.close();
 
+	Square s(20);
+
 
 	return 0;
 }

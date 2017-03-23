@@ -119,4 +119,14 @@ private:
 
 };
 
+class Square : public Polygon {
+public:
+	Square(double sideLength) {
+		Polygon(4, sideLength);
+	}
+
+private:
+
+};
+
 #endif // SHAPE_HPP
