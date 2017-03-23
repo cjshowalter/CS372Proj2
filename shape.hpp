@@ -208,7 +208,6 @@ private:
 
 
 
-
 class Layered : public Shape
 {
 public:
@@ -225,5 +224,36 @@ private:
 
 };
 
+
+class Scaled : public Shape {
+public:
+	Scaled(Shape &shape, double fx, double fy){
+	    std::string s = shape.generatePostScript();
+		ScaleString = std::to_string(fx) + " " + std::to_string(fy) + " scale\n";
+		ScaleString += s;
+	}
+	std::string generatePostScript() override{
+		return ScaleString;
+	}
+private:
+	std::string ScaleString;
+
+class Rotated : public Shape {
+public:
+	Rotated(Shape &shape, int rotationAngle)
+		:refShape(shape), rotAngle(rotationAngle) {}
+
+	std::string generatePostScript() override
+	{
+		std::string RotateString = std::to_string(rotAngle);
+		RotateString += " rotate\n";
+		RotateString += refShape.generatePostScript();
+
+		return RotateString;
+	}
+	Shape &refShape;
+	int rotAngle;
+private:
+};
 
 #endif // SHAPE_HPP
