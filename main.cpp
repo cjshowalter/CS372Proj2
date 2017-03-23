@@ -41,6 +41,14 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
+	Square squ(100);
+	std::string squString = squ.generatePostScript();
+	std::cout << squString << std::endl;
+
+	ofs << squString;
+	ofs << "\n";
+	ofs << "showpage\n";
+
 	ofs.close();
 
 	return 0;

@@ -84,8 +84,7 @@ public:
 		std::string polyString = "newpath\n";
 		polyString += std::to_string(width);
 		polyString += " ";
-		polyString += std::to_string(height);
-		polyString += " translate\n";
+		polyString += " 0 translate\n";
 		polyString += "0 0 moveto\n";
 
 		for (int i = 0; i < numSides_g; i++)
@@ -151,9 +150,11 @@ private:
 
 class Square : public Polygon {
 public:
-	Square(double sideLength) {
-		Polygon(4, sideLength);
-	}
+	/*Square(double sideLength) {
+	Polygon(4, sideLength);
+	}*/
+
+	Square(double sideLength) : Polygon(4, sideLength) {}
 
 private:
 
