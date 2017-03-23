@@ -2,7 +2,7 @@
 #define SHAPE_HPP
 
 #include <string>
-
+#include <cmath>
 
 class Shape {
 
@@ -51,8 +51,25 @@ private:
 
 class Polygon : public Shape {
 public:
-	Polygon(double numSides, double sideLength) {
-		
+	Polygon(int numSides, double sideLength)
+	{
+        const double pi = 3.141592653589793238;
+
+		if( numSides%2 == 1 )
+        {
+            height = sideLength*(1+cos(pi/numSides))/(2*sin(pi/numSides));
+            width = (sideLength*sin(pi*(numSides-1)/(2*numSides))/(sin(pi/numSides)));
+        }
+        else if(numSides%4 != 0) // numSides%2==0
+        {
+            height = sideLength * (cos(pi/numSides))/(sin(pi/numSides));
+            width = sideLength/(sin(pi/numSides));
+        }
+        else // numSides%2 == 0 && numSides%4 == 0
+        {
+            height = sideLength*(cos(pi/numSides))/(sin(pi/numSides));
+            width = height;
+        }
 	}
 
 private:
@@ -73,7 +90,7 @@ public:
 		rectangleString += " ";
 		rectangleString += "0";
 		rectangleString += " moveto\n";
-		
+
 		rectangleString += std::to_string(width);
 		rectangleString += " ";
 		rectangleString += "0";     					// Bottom
