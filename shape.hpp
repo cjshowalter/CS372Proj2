@@ -28,6 +28,7 @@ public:
 		return std::to_string(height);
 	}
 
+	width 2 div height 2 div width 2 div 0 360 arc closepath
 
 
 private:
