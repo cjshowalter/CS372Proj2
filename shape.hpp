@@ -25,16 +25,15 @@ public:
 	Circle(double radius) {
 		height = radius * 2;
 		width = radius * 2;
-		x = 0;
-		y = 0;
+
 		//std::string generatePostScript = "0";
 	}
 	std::string generatePostScript() override
 	{
 		std::string circleString = "";
-		circleString += std::to_string(x);
+		circleString += std::to_string(height / -2);
 		circleString += " ";
-		circleString += std::to_string(y);
+		circleString += std::to_string(width / -2);
 		circleString += " translate\n";
 		circleString += std::to_string(height / 2);
 		circleString += " ";
