@@ -53,7 +53,7 @@ private:
 
 class Polygon : public Shape {
 public:
-	Polygon()=default;
+	Polygon() = default;
 	Polygon(int numSides, double sideLength)
 	{
 		sideLength_g = sideLength;
@@ -161,7 +161,7 @@ public:
 	}
 	std::string generatePostScript() override
 	{
-	    std::string SpacerString = "newpath\n";
+		std::string SpacerString = "newpath\n";
 		SpacerString += std::to_string(x);
 		SpacerString += " ";
 		SpacerString += std::to_string(y);
@@ -211,33 +211,40 @@ private:
 class Layered : public Shape
 {
 public:
-    std::string generatePostScript( std::vector<Shape*> shapeList )
-    {
-        std::string SpacerString = "newpath\n";
-        for(auto i=0; i<shapeList.size(); ++i)
-        {
-            SpacerString += shapeList[i]->generatePostScript();
-        }
-        return SpacerString;
-    }
+	Layered(std::vector<Shape*> shapeListGiven)
+	{
+		shapeList = shapeListGiven;
+	}
+	std::string generatePostScript()
+	{
+		std::string SpacerString = "newpath\n";
+		for (auto i = 0; i<shapeList.size(); ++i)
+		{
+			SpacerString += shapeList[i]->generatePostScript();
+		}
+		return SpacerString;
+	}
+	std::vector<Shape*> shapeList;
 private:
 
 };
 
 
-class Scaled : public Shape {
+class Scaled : public Shape
+{
 public:
-	Scaled(Shape &shape, double fx, double fy){
-	    std::string s = shape.generatePostScript();
+	Scaled(Shape &shape, double fx, double fy) {
+		std::string s = shape.generatePostScript();
 		ScaleString = std::to_string(fx) + " " + std::to_string(fy) + " scale\n";
 		ScaleString += s;
 	}
-	std::string generatePostScript() override{
+	std::string generatePostScript() override {
 		return ScaleString;
 	}
+
 private:
 	std::string ScaleString;
-
+};
 class Rotated : public Shape {
 public:
 	Rotated(Shape &shape, int rotationAngle)
@@ -255,5 +262,4 @@ public:
 	int rotAngle;
 private:
 };
-
 #endif // SHAPE_HPP

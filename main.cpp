@@ -1,11 +1,11 @@
 // shape.cpp : Defines the entry point for the console application.
 //
 
-#include "shape.hpp"
+
 #include <iostream>
 #include <fstream>      // std::ofstream
 #include <vector>
-
+#include "shape.hpp"
 
 int main() {
 
@@ -58,13 +58,13 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-    /*
+	/*
 	std::vector<Shape*> vectorShapes = {c, r, p_0, squ};
 	ofs << Layered::generatePostScript(vectorShapes);
-    */
+	*/
 
 
-	ofs.close();
+
 
 
 	// *** Scaled Test ***
@@ -75,14 +75,17 @@ int main() {
 	std::cout << scaleString << std::endl;
 	ofs << scaleString;
 	ofs << "\n";
+	ofs << "showpage\n";
 
-//	Polygon p_1(5, 50);
-//	Scaled s1(p_1, 2, 2);
-//  std::string scaleString1 = s1.generatePostScript();
-//	std::cout << scaleString1 << std::endl;
-//	ofs << scaleString1;
-//	ofs << "\n";
 
+	//**** Layered Test
+
+	std::vector<Shape*> shapeVec = { &circ, &squ };
+	Layered lay(shapeVec);
+	std::string layString = lay.generatePostScript();
+	std::cout << layString << std::endl;
+	ofs << layString;
+	ofs << "\n";
 	ofs << "showpage\n";
 
 	ofs.close();
