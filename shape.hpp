@@ -5,7 +5,6 @@
 #include <cmath>
 #include <vector>
 
-
 class Shape {
 
 public:
@@ -13,11 +12,12 @@ public:
 	//virtual double height()=0;
 	//virtual double width()=0;
 	virtual std::string generatePostScript() = 0;
+
+protected:
 	double height;
 	double width;
 	double x;
 	double y;
-private:
 };
 
 class Circle : public Shape {
@@ -25,8 +25,6 @@ public:
 	Circle(double radius) {
 		height = radius * 2;
 		width = radius * 2;
-
-		//std::string generatePostScript = "0";
 	}
 	std::string generatePostScript() override
 	{
@@ -44,10 +42,6 @@ public:
 		circleString += "stroke\n";
 		return circleString;
 	}
-
-
-private:
-
 };
 
 class Polygon : public Shape {
@@ -101,10 +95,10 @@ public:
 
 		return polyString;
 	}
+
+private:
 	double sideLength_g;
 	double numSides_g;
-private:
-
 };
 
 class Rectangle : public Shape {
@@ -112,7 +106,6 @@ public:
 	Rectangle(double w, double h) {
 		height = h;
 		width = w;
-		//std::string generatePostScript = "0";
 	}
 	std::string generatePostScript() override
 	{
@@ -126,28 +119,24 @@ public:
 		rectangleString += " ";
 		rectangleString += "0";     					// Bottom
 		rectangleString += " ";
-		rectangleString += "rlineto ";
+		rectangleString += "rlineto\n";
 
 		rectangleString += "0";
 		rectangleString += " ";
 		rectangleString += std::to_string(height);      // Right
 		rectangleString += " ";
-		rectangleString += "rlineto ";
+		rectangleString += "rlineto\n";
 
 		rectangleString += std::to_string(width*-1);
 		rectangleString += " ";
-		rectangleString += "0";      					// Bottom
+		rectangleString += "0";      					// Top
 		rectangleString += " ";
-		rectangleString += "rlineto ";
+		rectangleString += "rlineto\n";
 
-		rectangleString += "closepath\n";
+		rectangleString += "closepath\n";               // Left
 		rectangleString += "stroke\n";
 		return rectangleString;
 	}
-
-
-private:
-
 };
 
 class Spacer : public Shape {
@@ -186,26 +175,13 @@ public:
 
 class Square : public Polygon {
 public:
-
 	Square(double sideLength) : Polygon(4, sideLength) {}
-
-private:
-
 };
 
 class Triangle : public Polygon {
 public:
-
-
 	Triangle(double sideLength) : Polygon(3, sideLength) {}
-
-private:
-
 };
-
-
-
-
 
 class Layered : public Shape
 {
@@ -217,17 +193,16 @@ public:
 	std::string generatePostScript()
 	{
 		std::string SpacerString = "newpath\n";
-		for (auto i = 0; i<shapeList.size(); ++i)
+		for (unsigned int i = 0; i<shapeList.size(); ++i)
 		{
 			SpacerString += shapeList[i]->generatePostScript();
 		}
 		return SpacerString;
 	}
-	std::vector<Shape*> shapeList;
+
 private:
-
+	std::vector<Shape*> shapeList;
 };
-
 
 class Scaled : public Shape
 {
@@ -244,6 +219,7 @@ public:
 private:
 	std::string ScaleString;
 };
+
 class Rotated : public Shape {
 public:
 	Rotated(Shape &shape, int rotationAngle)
@@ -257,8 +233,9 @@ public:
 
 		return RotateString;
 	}
-	Shape &refShape;
-	int rotAngle;
+
 private:
+    Shape &refShape;
+	int rotAngle;
 };
 #endif // SHAPE_HPP
