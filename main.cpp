@@ -84,8 +84,13 @@ int main() {
 	ofsScale.close();
 
 	// *** Layered Test ***
+
 std::cout << "AAAAAAAAAAA" << std::endl;
-	std::vector<Shape*> shapeVec = { &circ, &squ, &p_0 };
+
+	Circle circ2(100);
+
+	std::vector<Shape*> shapeVec = { &circ, &circ2, &squ, &p_0 };
+
 	Layered lay(shapeVec);
 	std::string layString = lay.generatePostScript();
 	std::cout << layString << std::endl;
