@@ -41,7 +41,7 @@ int main() {
 	std::string polyString = p_0.generatePostScript();
 	std::cout << polyString << std::endl;
 
-    std::ofstream ofsPoly;
+	std::ofstream ofsPoly;
 	ofsPoly.open("polyTest.ps", std::ofstream::out | std::ofstream::app);
 	ofsPoly << "%!\n";
 	ofsPoly << polyString;
@@ -90,7 +90,7 @@ int main() {
 
 	// *** Layered Test ***
 
-	std::vector<Shape*> shapeVec = { &circ, &squ };
+	std::vector<Shape*> shapeVec = { &circ, &squ, &p_0 };
 	Layered lay(shapeVec);
 	std::string layString = lay.generatePostScript();
 	std::cout << layString << std::endl;

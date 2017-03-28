@@ -36,10 +36,15 @@ public:
 		circleString += std::to_string(height / 2);
 		circleString += " ";
 		circleString += std::to_string(width / 2);
-		circleString += " \n";
+		circleString += " ";
 		circleString += std::to_string(width / 2);
 		circleString += " 0 360 arc closepath\n";
 		circleString += "stroke\n";
+
+		circleString += std::to_string(height / 2);
+		circleString += " ";
+		circleString += std::to_string(width / 2);
+		circleString += " translate\n";
 		return circleString;
 	}
 };
@@ -77,10 +82,17 @@ public:
 		std::string sideAngle = std::to_string(anglePerSide);
 
 		std::string myLength = std::to_string(sideLength_g);
-		std::string polyString = "newpath\n";
-		polyString += std::to_string(width);
+
+		std::string polyString = "";
+		polyString += std::to_string(height / -2);
 		polyString += " ";
-		polyString += " 0 translate\n";
+		polyString += std::to_string(width / -2);
+		polyString += " translate\n";
+		polyString += "newpath\n";
+
+		//polyString += std::to_string(width);
+		//polyString += " ";
+		//polyString += " 0 translate\n";
 		polyString += "0 0 moveto\n";
 
 		for (int i = 0; i < numSides_g; i++)
@@ -92,6 +104,11 @@ public:
 		}
 		polyString += "closepath\n";
 		polyString += "stroke\n";
+		polyString += std::to_string(height / -2);
+		polyString += " ";
+		polyString += std::to_string(width / -2);
+		polyString += " translate\n";
+
 
 		return polyString;
 	}
@@ -235,7 +252,7 @@ public:
 	}
 
 private:
-    Shape &refShape;
+	Shape &refShape;
 	int rotAngle;
 };
 #endif // SHAPE_HPP
