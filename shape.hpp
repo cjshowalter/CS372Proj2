@@ -13,7 +13,6 @@ public:
 	//virtual double width()=0;
 	virtual std::string generatePostScript() = 0;
 
-//protected:
 	double height;
 	double width;
 	double x;
@@ -284,4 +283,46 @@ private:
 	Shape &refShape;
 	int rotAngle;
 };
+
+class Vertical : public Shape {
+public:
+	Vertical(std::vector<Shape*> vertStack)
+	{
+		double currentHeight=0;
+		double maxWidth=0;
+		vertString="VERT STUFF*************\n%!\n";
+
+		for(int i=0; i<vertStack.size(); ++i) {
+			if(vertStack[i]->width > maxWidth) {
+				maxWidth = vertStack[i]->width;
+			}
+		}
+
+		for(int i=0; i<vertStack.size(); ++i) {
+			vertString += std::to_string(maxWidth);
+			vertString += " ";
+			vertString += std::to_string(vertStack[i]->height/2);
+			vertString += " translate\n";
+			vertString += vertStack[i]->generatePostScript();
+			vertString += std::to_string(-maxWidth);
+			vertString += " ";
+			vertString += std::to_string((vertStack[i]->height/2) + 1);
+			vertString += " translate\n";
+			vertString +="\n";
+			currentHeight += ((vertStack[i]->height/2)+1);
+			//currentWidth = vertStack[i]->width/2;
+		}
+		vertString += "showpage\n";
+	}
+
+	std::string generatePostScript() override {
+		return vertString;
+	}
+
+private:
+	std::unique_ptr<Shape> _s;
+	std::string vertString;
+
+};
+
 #endif // SHAPE_HPP
