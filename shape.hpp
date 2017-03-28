@@ -84,9 +84,9 @@ public:
 		std::string myLength = std::to_string(sideLength_g);
 
 		std::string polyString = "";
-		polyString += std::to_string(height / -2);
+		polyString += std::to_string(sideLength_g / -2);
 		polyString += " ";
-		polyString += std::to_string(width / -2);
+		polyString += std::to_string(height / -2);
 		polyString += " translate\n";
 		polyString += "newpath\n";
 
@@ -97,16 +97,16 @@ public:
 
 		for (int i = 0; i < numSides_g; i++)
 		{
-			polyString += "0 " + myLength + " lineto\n";
-			polyString += "0 " + myLength + " translate\n";
+			polyString += myLength + " 0" + " lineto\n";
+			polyString += myLength + " 0" + " translate\n";
 			polyString += sideAngle + " rotate\n";
 
 		}
 		polyString += "closepath\n";
 		polyString += "stroke\n";
-		polyString += std::to_string(height / -2);
+		polyString += std::to_string(sideLength_g / 2);
 		polyString += " ";
-		polyString += std::to_string(width / -2);
+		polyString += std::to_string(height / 2);
 		polyString += " translate\n";
 
 
