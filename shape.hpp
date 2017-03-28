@@ -220,8 +220,8 @@ public:
 	Layered(std::vector<Shape*> shapeListGiven)
 	{
 		shapeList = shapeListGiven;
-		int width = 0;
-		int height = 0;
+		double width = 0;
+		double height = 0;
 
 		for(auto i=0; i<shapeList.size(); ++i)
         {
