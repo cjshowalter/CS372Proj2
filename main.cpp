@@ -62,11 +62,6 @@ int main() {
 	ofsSqu << "showpage\n";
 	ofsSqu.close();
 
-	/*
-	std::vector<Shape*> vectorShapes = {c, r, p_0, squ};
-	ofs << Layered::generatePostScript(vectorShapes);
-	*/
-
 	// *** Scaled Test ***
 
 	Circle circ(200);
@@ -89,7 +84,7 @@ int main() {
 	ofsScale.close();
 
 	// *** Layered Test ***
-
+std::cout << "AAAAAAAAAAA" << std::endl;
 	std::vector<Shape*> shapeVec = { &circ, &squ, &p_0 };
 	Layered lay(shapeVec);
 	std::string layString = lay.generatePostScript();

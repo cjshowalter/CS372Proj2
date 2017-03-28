@@ -13,7 +13,7 @@ public:
 	//virtual double width()=0;
 	virtual std::string generatePostScript() = 0;
 
-protected:
+//protected:
 	double height;
 	double width;
 	double x;
@@ -206,15 +206,29 @@ public:
 	Layered(std::vector<Shape*> shapeListGiven)
 	{
 		shapeList = shapeListGiven;
+		int width = 0;
+		int height = 0;
+
+		for(auto i=0; i<shapeList.size(); ++i)
+        {
+            if(width < shapeList[i]->width)
+            {
+                width = shapeList[i]->width;
+            }
+            if(height < shapeList[i]->height)
+            {
+                height = shapeList[i]->height;
+            }
+        }
 	}
 	std::string generatePostScript()
 	{
-		std::string SpacerString = "newpath\n";
+		std::string totalString = "newpath\n";
 		for (unsigned int i = 0; i<shapeList.size(); ++i)
 		{
-			SpacerString += shapeList[i]->generatePostScript();
+			totalString += shapeList[i]->generatePostScript();
 		}
-		return SpacerString;
+		return totalString;
 	}
 
 private:
