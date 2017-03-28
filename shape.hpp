@@ -288,9 +288,7 @@ class Vertical : public Shape {
 public:
 	Vertical(std::vector<Shape*> vertStack)
 	{
-		double currentHeight=0;
 		double maxWidth=0;
-		vertString="VERT STUFF*************\n%!\n";
 
 		for(int i=0; i<vertStack.size(); ++i) {
 			if(vertStack[i]->width > maxWidth) {
@@ -309,8 +307,6 @@ public:
 			vertString += std::to_string((vertStack[i]->height/2) + 1);
 			vertString += " translate\n";
 			vertString +="\n";
-			currentHeight += ((vertStack[i]->height/2)+1);
-			//currentWidth = vertStack[i]->width/2;
 		}
 		vertString += "showpage\n";
 	}
@@ -320,8 +316,43 @@ public:
 	}
 
 private:
-	std::unique_ptr<Shape> _s;
 	std::string vertString;
+
+};
+
+class Horizontal : public Shape {
+public:
+	Horizontal(std::vector<Shape*> vertStack)
+	{
+		double maxHeight=0;
+
+		for(int i=0; i<vertStack.size(); ++i) {
+			if(vertStack[i]->height > maxHeight) {
+				maxHeight = vertStack[i]->height;
+			}
+		}
+
+		for(int i=0; i<vertStack.size(); ++i) {
+			horizontalString += std::to_string(vertStack[i]->width/2);
+			horizontalString += " ";
+			horizontalString += std::to_string(maxHeight);
+			horizontalString += " translate\n";
+			horizontalString += vertStack[i]->generatePostScript();
+			horizontalString += std::to_string((vertStack[i]->width/2) + 1);
+			horizontalString += " ";
+			horizontalString += std::to_string(-maxHeight);
+			horizontalString += " translate\n";
+			horizontalString +="\n";
+		}
+		horizontalString += "showpage\n";
+	}
+
+	std::string generatePostScript() override {
+		return horizontalString;
+	}
+
+private:
+	std::string horizontalString;
 
 };
 
