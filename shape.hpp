@@ -13,7 +13,7 @@ public:
 	//virtual double width()=0;
 	virtual std::string generatePostScript() = 0;
 
-protected:
+	//protected:
 	double height;
 	double width;
 	double x;
