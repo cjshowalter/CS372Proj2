@@ -286,8 +286,13 @@ private:
 
 class Vertical : public Shape {
 public:
-	Vertical(std::vector<Shape*> vertStack)
+	Vertical(std::vector<Shape*> vertVec)
 	{
+		vertStack = vertVec;
+	}
+
+	std::string generatePostScript() override {
+		std::string vertString;
 		double maxWidth=0;
 
 		for(int i=0; i<vertStack.size(); ++i) {
@@ -295,7 +300,6 @@ public:
 				maxWidth = vertStack[i]->width;
 			}
 		}
-
 		for(int i=0; i<vertStack.size(); ++i) {
 			vertString += std::to_string(maxWidth);
 			vertString += " ";
@@ -309,50 +313,49 @@ public:
 			vertString +="\n";
 		}
 		vertString += "showpage\n";
-	}
-
-	std::string generatePostScript() override {
 		return vertString;
 	}
 
 private:
-	std::string vertString;
-
+	std::vector<Shape*> vertStack;
 };
 
 class Horizontal : public Shape {
 public:
-	Horizontal(std::vector<Shape*> vertStack)
+	Horizontal(std::vector<Shape*> horizontalVec)
 	{
+		horizontalStack = horizontalVec;
+	}
+
+	std::string generatePostScript() override {
+
+		std::string horizontalString;
 		double maxHeight=0;
 
-		for(int i=0; i<vertStack.size(); ++i) {
-			if(vertStack[i]->height > maxHeight) {
-				maxHeight = vertStack[i]->height;
+		for(int i=0; i<horizontalStack.size(); ++i) {
+			if(horizontalStack[i]->height > maxHeight) {
+				maxHeight = horizontalStack[i]->height;
 			}
 		}
 
-		for(int i=0; i<vertStack.size(); ++i) {
-			horizontalString += std::to_string(vertStack[i]->width/2);
+		for(int i=0; i<horizontalStack.size(); ++i) {
+			horizontalString += std::to_string(horizontalStack[i]->width/2);
 			horizontalString += " ";
 			horizontalString += std::to_string(maxHeight);
 			horizontalString += " translate\n";
-			horizontalString += vertStack[i]->generatePostScript();
-			horizontalString += std::to_string((vertStack[i]->width/2) + 1);
+			horizontalString += horizontalStack[i]->generatePostScript();
+			horizontalString += std::to_string((horizontalStack[i]->width/2) + 1);
 			horizontalString += " ";
 			horizontalString += std::to_string(-maxHeight);
 			horizontalString += " translate\n";
 			horizontalString +="\n";
 		}
 		horizontalString += "showpage\n";
-	}
-
-	std::string generatePostScript() override {
 		return horizontalString;
 	}
 
 private:
-	std::string horizontalString;
+	std::vector<Shape*> horizontalStack;
 
 };
 
