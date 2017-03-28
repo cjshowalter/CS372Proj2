@@ -85,8 +85,6 @@ int main() {
 
 	// *** Layered Test ***
 
-std::cout << "AAAAAAAAAAA" << std::endl;
-
 	Circle circ2(100);
 
 	std::vector<Shape*> shapeVec = { &circ, &circ2, &squ, &p_0 };

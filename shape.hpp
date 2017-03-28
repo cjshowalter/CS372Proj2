@@ -126,11 +126,23 @@ public:
 	}
 	std::string generatePostScript() override
 	{
+        negHalfHeight_=-1.0*height/2.0;
+        negHalfWidth_=-1.0*width/2.0;
+
 		std::string rectangleString = "";
 		rectangleString += "0";
 		rectangleString += " ";
 		rectangleString += "0";
 		rectangleString += " moveto\n";
+
+        rectangleString += std::to_string(negHalfWidth_);
+		rectangleString += " ";
+		rectangleString += std::to_string(negHalfHeight_);
+		rectangleString += " moveto\n";
+		rectangleString += std::to_string(negHalfWidth_);
+		rectangleString += " ";
+		rectangleString += std::to_string(negHalfHeight_);
+		rectangleString += " translate\n";
 
 		rectangleString += std::to_string(width);
 		rectangleString += " ";
@@ -154,6 +166,9 @@ public:
 		rectangleString += "stroke\n";
 		return rectangleString;
 	}
+private:
+    double negHalfHeight_;
+    double negHalfWidth_;
 };
 
 class Spacer : public Shape {
