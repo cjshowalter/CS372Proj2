@@ -103,7 +103,9 @@ int main() {
 
 	Circle circ2(100);
 
-	std::vector<Shape*> shapeVec = { &circ, &circ2, &squ, &p_0 };
+    Rectangle rect(40, 60);
+
+	std::vector<Shape*> shapeVec = { &circ, &circ2, &squ, &rect, &p_0 };
 
 	Layered lay(shapeVec);
 	std::string layString = lay.generatePostScript();
