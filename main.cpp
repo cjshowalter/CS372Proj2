@@ -83,7 +83,8 @@ int main() {
 
 	Scaled s(circ, 0.5, 0.5);
 	std::string scaleString = s.generatePostScript();
-	if ((s.height - 100 > 1) || (s.width - 100 > 1) || (s.height - 100 < -1) || (s.width - 100 < -1))
+	//std::cout << s.height << std::endl;
+	if ((s.height - 200 > 1) || (s.width - 200 > 1) || (s.height - 200 < -1) || (s.width - 200 < -1))
 	{
 		std::cout << "Scaled has incorrect height or width" << std::endl;
 	}
@@ -103,7 +104,7 @@ int main() {
 
 	Circle circ2(100);
 
-    Rectangle rect(40, 60);
+	Rectangle rect(40, 60);
 
 	std::vector<Shape*> shapeVec = { &circ, &circ2, &squ, &rect, &p_0 };
 
@@ -118,7 +119,35 @@ int main() {
 	ofsCirc << "\n";
 	ofsCirc << "showpage\n";
 
+	Circle circ3(40);
+	Square squ2(30);
+	Triangle tri1(30);
+	Scaled sca1(circ3, 0.7, 0.7);
+	std::vector<Shape*> shapeVec2 = { &circ3, &squ2, &tri1,&sca1,&squ2 };
 
+	Horizontal hor(shapeVec2);
+
+	std::string horString = hor.generatePostScript();
+	//std::cout << layString << std::endl;
+
+	//	std::ofstream ofsLayer;
+	//ofsLayer.open("layerTest.ps", std::ofstream::out | std::ofstream::app);
+	//ofsLayer << "%!\n";
+	ofsCirc << horString;
+	ofsCirc << "\n";
+	ofsCirc << "showpage\n";
+
+	Vertical ver(shapeVec2);
+
+	std::string verString = ver.generatePostScript();
+	//std::cout << layString << std::endl;
+
+	//	std::ofstream ofsLayer;
+	//ofsLayer.open("layerTest.ps", std::ofstream::out | std::ofstream::app);
+	//ofsLayer << "%!\n";
+	ofsCirc << verString;
+	ofsCirc << "\n";
+	ofsCirc << "showpage\n";
 
 
 	ofsCirc.close();

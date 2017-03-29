@@ -125,8 +125,8 @@ public:
 	}
 	std::string generatePostScript() override
 	{
-        halfHeight_=height/2.0;
-        halfWidth_=width/2.0;
+		halfHeight_ = height / 2.0;
+		halfWidth_ = width / 2.0;
 
 		std::string rectangleString = "";
 		rectangleString += "0";
@@ -134,13 +134,13 @@ public:
 		rectangleString += "0";
 		rectangleString += " moveto\n";
 
-        rectangleString += std::to_string(-1*halfWidth_); //move to draw at origin
+		rectangleString += std::to_string(-1 * halfWidth_); //move to draw at origin
 		rectangleString += " ";
-		rectangleString += std::to_string(-1*halfHeight_);
+		rectangleString += std::to_string(-1 * halfHeight_);
 		rectangleString += " moveto\n";
-		rectangleString += std::to_string(-1*halfWidth_);
+		rectangleString += std::to_string(-1 * halfWidth_);
 		rectangleString += " ";
-		rectangleString += std::to_string(-1*halfHeight_);
+		rectangleString += std::to_string(-1 * halfHeight_);
 		rectangleString += " translate\n";
 
 		rectangleString += std::to_string(width);
@@ -164,7 +164,7 @@ public:
 		rectangleString += "closepath\n";               // Left
 		rectangleString += "stroke\n";
 
-        rectangleString += std::to_string(halfWidth_);//move back from origin
+		rectangleString += std::to_string(halfWidth_);//move back from origin
 		rectangleString += " ";
 		rectangleString += std::to_string(halfHeight_);
 		rectangleString += " moveto\n";
@@ -176,8 +176,8 @@ public:
 		return rectangleString;
 	}
 private:
-    double halfHeight_;
-    double halfWidth_;
+	double halfHeight_;
+	double halfWidth_;
 };
 
 class Spacer : public Shape {
@@ -233,17 +233,17 @@ public:
 		double width = 0;
 		double height = 0;
 
-		for(auto i=0; i<shapeList.size(); ++i)
-        {
-            if(width < shapeList[i]->width)
-            {
-                width = shapeList[i]->width;
-            }
-            if(height < shapeList[i]->height)
-            {
-                height = shapeList[i]->height;
-            }
-        }
+		for (auto i = 0; i<shapeList.size(); ++i)
+		{
+			if (width < shapeList[i]->width)
+			{
+				width = shapeList[i]->width;
+			}
+			if (height < shapeList[i]->height)
+			{
+				height = shapeList[i]->height;
+			}
+		}
 	}
 	std::string generatePostScript()
 	{
@@ -266,12 +266,14 @@ public:
 		std::string s = shape.generatePostScript();
 		ScaleString = std::to_string(fx) + " " + std::to_string(fy) + " scale\n";
 		ScaleString += s;
+		ScaleString += std::to_string(1 / fx) + " " + std::to_string(1 / fy) + " scale\n";
 
-		height = height * fy;
-		width = width * fx;
+		height = shape.height * fy;
+		width = shape.width * fx;
 	}
 	std::string generatePostScript() override {
 		return ScaleString;
+
 	}
 
 private:
@@ -306,24 +308,24 @@ public:
 
 	std::string generatePostScript() override {
 		std::string vertString = "\n% **** VERTICAL PS ****\n\n";
-		double maxWidth=0;
+		double maxWidth = 0;
 
-		for(int i=0; i<vertStack.size(); ++i) {
-			if(vertStack[i]->width > maxWidth) {
+		for (int i = 0; i<vertStack.size(); ++i) {
+			if (vertStack[i]->width > maxWidth) {
 				maxWidth = vertStack[i]->width;
 			}
 		}
-		for(int i=0; i<vertStack.size(); ++i) {
+		for (int i = 0; i<vertStack.size(); ++i) {
 			vertString += std::to_string(maxWidth);
 			vertString += " ";
-			vertString += std::to_string(vertStack[i]->height/2);
+			vertString += std::to_string(vertStack[i]->height / 2);
 			vertString += " translate\n";
 			vertString += vertStack[i]->generatePostScript();
 			vertString += std::to_string(-maxWidth);
 			vertString += " ";
-			vertString += std::to_string((vertStack[i]->height/2) + 1);
+			vertString += std::to_string((vertStack[i]->height / 2) + 1);
 			vertString += " translate\n";
-			vertString +="\n";
+			vertString += "\n";
 		}
 		vertString += "showpage\n\n";
 		vertString += "% **** VERTICAL END ****\n";
@@ -344,25 +346,25 @@ public:
 	std::string generatePostScript() override {
 
 		std::string horizontalString = "\n% **** HORIZONTAL PS ****\n\n";
-		double maxHeight=0;
+		double maxHeight = 0;
 
-		for(int i=0; i<horizontalStack.size(); ++i) {
-			if(horizontalStack[i]->height > maxHeight) {
+		for (int i = 0; i<horizontalStack.size(); ++i) {
+			if (horizontalStack[i]->height > maxHeight) {
 				maxHeight = horizontalStack[i]->height;
 			}
 		}
 
-		for(int i=0; i<horizontalStack.size(); ++i) {
-			horizontalString += std::to_string(horizontalStack[i]->width/2);
+		for (int i = 0; i<horizontalStack.size(); ++i) {
+			horizontalString += std::to_string(horizontalStack[i]->width / 2);
 			horizontalString += " ";
 			horizontalString += std::to_string(maxHeight);
 			horizontalString += " translate\n";
 			horizontalString += horizontalStack[i]->generatePostScript();
-			horizontalString += std::to_string((horizontalStack[i]->width/2) + 1);
+			horizontalString += std::to_string((horizontalStack[i]->width / 2) + 1);
 			horizontalString += " ";
 			horizontalString += std::to_string(-maxHeight);
 			horizontalString += " translate\n";
-			horizontalString +="\n";
+			horizontalString += "\n";
 		}
 		horizontalString += "showpage\n\n";
 		horizontalString += "% **** HORIZONTAL END ****\n";
