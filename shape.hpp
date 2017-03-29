@@ -302,7 +302,7 @@ public:
 	}
 
 	std::string generatePostScript() override {
-		std::string vertString;
+		std::string vertString = "\n% **** VERTICAL PS ****\n\n";
 		double maxWidth=0;
 
 		for(int i=0; i<vertStack.size(); ++i) {
@@ -322,7 +322,8 @@ public:
 			vertString += " translate\n";
 			vertString +="\n";
 		}
-		vertString += "showpage\n";
+		vertString += "showpage\n\n";
+		vertString += "% **** HORIZONTAL END ****\n";
 		return vertString;
 	}
 
@@ -339,7 +340,7 @@ public:
 
 	std::string generatePostScript() override {
 
-		std::string horizontalString;
+		std::string horizontalString = "\n% **** HORIZONTAL PS ****\n\n";
 		double maxHeight=0;
 
 		for(int i=0; i<horizontalStack.size(); ++i) {
@@ -360,7 +361,8 @@ public:
 			horizontalString += " translate\n";
 			horizontalString +="\n";
 		}
-		horizontalString += "showpage\n";
+		horizontalString += "showpage\n\n";
+		horizontalString += "% **** HORIZONTAL END ****\n";
 		return horizontalString;
 	}
 
