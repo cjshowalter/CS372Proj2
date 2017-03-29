@@ -326,7 +326,7 @@ public:
 			vertString +="\n";
 		}
 		vertString += "showpage\n\n";
-		vertString += "% **** HORIZONTAL END ****\n";
+		vertString += "% **** VERTICAL END ****\n";
 		return vertString;
 	}
 
