@@ -125,8 +125,8 @@ public:
 	}
 	std::string generatePostScript() override
 	{
-        negHalfHeight_=-1.0*height/2.0;
-        negHalfWidth_=-1.0*width/2.0;
+        halfHeight_=height/2.0;
+        halfWidth_=width/2.0;
 
 		std::string rectangleString = "";
 		rectangleString += "0";
@@ -134,13 +134,13 @@ public:
 		rectangleString += "0";
 		rectangleString += " moveto\n";
 
-        rectangleString += std::to_string(negHalfWidth_);
+        rectangleString += std::to_string(-1*halfWidth_); //move to draw at origin
 		rectangleString += " ";
-		rectangleString += std::to_string(negHalfHeight_);
+		rectangleString += std::to_string(-1*halfHeight_);
 		rectangleString += " moveto\n";
-		rectangleString += std::to_string(negHalfWidth_);
+		rectangleString += std::to_string(-1*halfWidth_);
 		rectangleString += " ";
-		rectangleString += std::to_string(negHalfHeight_);
+		rectangleString += std::to_string(-1*halfHeight_);
 		rectangleString += " translate\n";
 
 		rectangleString += std::to_string(width);
@@ -163,11 +163,21 @@ public:
 
 		rectangleString += "closepath\n";               // Left
 		rectangleString += "stroke\n";
+
+        rectangleString += std::to_string(halfWidth_);//move back from origin
+		rectangleString += " ";
+		rectangleString += std::to_string(halfHeight_);
+		rectangleString += " moveto\n";
+		rectangleString += std::to_string(halfWidth_);
+		rectangleString += " ";
+		rectangleString += std::to_string(halfHeight_);
+		rectangleString += " translate\n";
+
 		return rectangleString;
 	}
 private:
-    double negHalfHeight_;
-    double negHalfWidth_;
+    double halfHeight_;
+    double halfWidth_;
 };
 
 class Spacer : public Shape {
