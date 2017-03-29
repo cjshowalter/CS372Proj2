@@ -266,6 +266,9 @@ public:
 		std::string s = shape.generatePostScript();
 		ScaleString = std::to_string(fx) + " " + std::to_string(fy) + " scale\n";
 		ScaleString += s;
+
+		height = height * fy;
+		width = width * fx;
 	}
 	std::string generatePostScript() override {
 		return ScaleString;
