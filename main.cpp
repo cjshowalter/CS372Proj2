@@ -140,9 +140,13 @@ int main() {
 	double totalHeight = circ3.height + squ2.height + tri1.height + sca1.height + squ2.height;
 	double totalWidth = circ3.width + squ2.width + tri1.width + sca1.width + squ2.width;
 
-	if ((hor.height - circ3.height > 1) || (hor.width - totalWidth > 1) || (hor.height - circ3.height < -1) || (hor.width - totalWidth < -1))
+	if ((hor.height - totalHeight > 1) || (hor.width - totalWidth > 1) || (hor.height - circ3.height < -1) || (hor.width - totalWidth < -1))
 	{
 		std::cout << "Horizontal has incorrect height or width" << std::endl;
+		std::cout << "Horizontal Width = " << hor.width << "\n";
+		std::cout << "Total Width = " << totalWidth << "\n";
+		std::cout << "Horizontal Height " << hor.height << "\n";
+		std::cout << "Total Height = " << totalHeight << "\n";
 	}
 
 	ofsCirc << horString;
@@ -152,9 +156,13 @@ int main() {
 	Vertical ver(shapeVec2);
 
 	std::string verString = ver.generatePostScript();
-	if ((ver.height - totalHeight > 1) || (ver.width - circ3.width > 1) || (ver.height - totalHeight < -1) || (ver.width - circ3.width < -1))
+	if ((ver.height - totalHeight > 1) || (ver.width - totalWidth > 1) || (ver.height - totalHeight < -1) || (ver.width - circ3.width < -1))
 	{
 		std::cout << "Vertical has incorrect height or width" << std::endl;
+		std::cout << "Vertical Width = " << ver.width << "\n";
+		std::cout << "Total Width = " << totalWidth << "\n";
+		std::cout << "Vertical Height " << ver.height << "\n";
+		std::cout << "Total Height = " << totalHeight << "\n";
 	}
 
 	ofsCirc << verString;
