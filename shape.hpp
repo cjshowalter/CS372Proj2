@@ -316,6 +316,12 @@ public:
 	Vertical(std::vector<Shape*> vertVec)
 	{
 		vertStack = vertVec;
+		height=0;
+		width=0;
+		for(int i=0; i<vertStack.size(); ++i) {
+			height = vertStack[i]->height;
+			width = vertStack[i]->width;
+		}
 	}
 
 	std::string generatePostScript() override {
@@ -353,6 +359,12 @@ public:
 	Horizontal(std::vector<Shape*> horizontalVec)
 	{
 		horizontalStack = horizontalVec;
+		height=0;
+		width=0;
+		for(int i=0; i<horizontalStack.size(); ++i) {
+			height = horizontalStack[i]->height;
+			width = horizontalStack[i]->width;
+		}
 	}
 
 	std::string generatePostScript() override {
