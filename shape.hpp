@@ -4,6 +4,9 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include <memory>
+using std::unique_ptr;
+using std::make_unique;
 
 class Shape {
 
@@ -227,13 +230,13 @@ public:
 class Layered : public Shape
 {
 public:
-	Layered(std::vector<Shape*> shapeListGiven)
+	Layered(std::vector<unique_ptr<Shape>> shapeListGiven)
 	{
-		shapeList = shapeListGiven;
+        shapeList = std::move(shapeListGiven);
 		double width = 0;
 		double height = 0;
 
-		for (auto i = 0; i<shapeList.size(); ++i)
+		for (unsigned int i = 0; i<shapeList.size(); ++i)
 		{
 			if (width < shapeList[i]->width)
 			{
@@ -256,7 +259,7 @@ public:
 	}
 
 private:
-	std::vector<Shape*> shapeList;
+	std::vector<unique_ptr<Shape>> shapeList;
 };
 
 class Scaled : public Shape
@@ -313,14 +316,14 @@ private:
 
 class Vertical : public Shape {
 public:
-	Vertical(std::vector<Shape*> vertVec)
+	Vertical(std::vector<unique_ptr<Shape>> vertVec)
 	{
-		vertStack = vertVec;
+		vertStack = std::move(vertVec);
 		height=0;
 		width=0;
-		for(int i=0; i<vertStack.size(); ++i) {
-			height += vertStack[i]->height;
-			width += vertStack[i]->width;
+		for(unsigned int i=0; i<vertStack.size(); ++i) {
+			height += std::move(vertStack[i]->height);
+			width += std::move(vertStack[i]->width);
 		}
 	}
 
@@ -328,12 +331,12 @@ public:
 		std::string vertString = "\n% **** VERTICAL PS ****\n\n";
 		double maxWidth = 0;
 
-		for (int i = 0; i<vertStack.size(); ++i) {
+		for (unsigned int i = 0; i<vertStack.size(); ++i) {
 			if (vertStack[i]->width > maxWidth) {
-				maxWidth = vertStack[i]->width;
+				maxWidth = std::move(vertStack[i]->width);
 			}
 		}
-		for (int i = 0; i<vertStack.size(); ++i) {
+		for (unsigned int i = 0; i<vertStack.size(); ++i) {
 			vertString += std::to_string(maxWidth);
 			vertString += " ";
 			vertString += std::to_string(vertStack[i]->height / 2);
@@ -341,7 +344,7 @@ public:
 			vertString += vertStack[i]->generatePostScript();
 			vertString += std::to_string(-maxWidth);
 			vertString += " ";
-			vertString += std::to_string((vertStack[i]->height / 2));
+			vertString += std::to_string(vertStack[i]->height / 2);
 			vertString += " translate\n";
 			vertString += "\n";
 		}
@@ -351,17 +354,17 @@ public:
 	}
 
 private:
-	std::vector<Shape*> vertStack;
+	std::vector<unique_ptr<Shape>> vertStack;
 };
 
 class Horizontal : public Shape {
 public:
-	Horizontal(std::vector<Shape*> horizontalVec)
+	Horizontal(std::vector<unique_ptr<Shape>> horizontalVec)
 	{
-		horizontalStack = horizontalVec;
+		horizontalStack = std::move(horizontalVec);
 		height=0;
 		width=0;
-		for(int i=0; i<horizontalStack.size(); ++i) {
+		for(unsigned int i=0; i<horizontalStack.size(); ++i) {
 			height += horizontalStack[i]->height;
 			width += horizontalStack[i]->width;
 		}
@@ -372,19 +375,19 @@ public:
 		std::string horizontalString = "\n% **** HORIZONTAL PS ****\n\n";
 		double maxHeight = 0;
 
-		for (int i = 0; i<horizontalStack.size(); ++i) {
+		for (unsigned int i = 0; i<horizontalStack.size(); ++i) {
 			if (horizontalStack[i]->height > maxHeight) {
-				maxHeight = horizontalStack[i]->height;
+				maxHeight = std::move(horizontalStack[i]->height);
 			}
 		}
 
-		for (int i = 0; i<horizontalStack.size(); ++i) {
+		for (unsigned int i = 0; i<horizontalStack.size(); ++i) {
 			horizontalString += std::to_string(horizontalStack[i]->width / 2);
 			horizontalString += " ";
 			horizontalString += std::to_string(maxHeight);
 			horizontalString += " translate\n";
 			horizontalString += horizontalStack[i]->generatePostScript();
-			horizontalString += std::to_string((horizontalStack[i]->width / 2));
+			horizontalString += std::to_string(horizontalStack[i]->width / 2);
 			horizontalString += " ";
 			horizontalString += std::to_string(-maxHeight);
 			horizontalString += " translate\n";
@@ -396,7 +399,7 @@ public:
 	}
 
 private:
-	std::vector<Shape*> horizontalStack;
+	std::vector<unique_ptr<Shape>> horizontalStack;
 
 };
 

@@ -83,7 +83,7 @@ To use the compound shape classes, you must first have created one or more basic
 Then you can simply create an object of your chosen shape class type following the parameter
 requirements for that class. For example, "c = Circle(2); r = Scaled(c, 2, 2)" creates a scaled circle of twice
 the width and height of the original. Some of the compound classes, such as Layered, will require
-a vector of shape objects to be passed as a parameter. Generating PostScript for compound shapes
+a vector of unique pointers to shape objects to be passed as a parameter. Generating PostScript for compound shapes
 is the same as generating PostScript for basic shape classes.
 
 
@@ -96,6 +96,7 @@ Is the language expressive enough to create interesting drawings?
 Answer
 ----------
 
+
 Question
 -------------
 Are the shape abstractions well-designed, or not?
@@ -103,12 +104,14 @@ Are the shape abstractions well-designed, or not?
 Answer
 ----------
 
+
 Question
 -------------
 Do they make certain drawings easy/difficult to create?
 
 Answer
 ----------
+
 
 Question
 -------------

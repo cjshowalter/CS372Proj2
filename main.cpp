@@ -114,13 +114,17 @@ int main() {
 
 	Rectangle rect(40, 60);
 
-	std::vector<Shape*> shapeVec = { &circ, &circ2, &squ, &rect, &p_0 };
+	std::vector<unique_ptr<Shape>> shapeVec;
+	shapeVec.push_back(make_unique<Circle>(circ));
+	shapeVec.push_back(make_unique<Circle>(circ2));
+	shapeVec.push_back(make_unique<Square>(squ));
+	shapeVec.push_back(make_unique<Polygon>(p_0));
 
-	Layered lay(shapeVec);
+	Layered lay(std::move(shapeVec));
 	std::string layString = lay.generatePostScript();
-	//std::cout << layString << std::endl;
+	std::cout << layString << std::endl;
 
-	//	std::ofstream ofsLayer;
+    //std::ofstream ofsLayer;
 	//ofsLayer.open("layerTest.ps", std::ofstream::out | std::ofstream::app);
 	//ofsLayer << "%!\n";
 	ofsCirc << layString;
@@ -131,9 +135,14 @@ int main() {
 	Square squ2(30);
 	Triangle tri1(30);
 	Scaled sca1(circ3, 0.7, 0.7);
-	std::vector<Shape*> shapeVec2 = { &circ3, &squ2, &tri1,&sca1,&squ2 };
+	std::vector<unique_ptr<Shape>> shapeVec2;
+	shapeVec2.push_back(make_unique<Circle>(circ3));
+	shapeVec2.push_back(make_unique<Square>(squ2));
+	shapeVec2.push_back(make_unique<Triangle>(tri1));
+	shapeVec2.push_back(make_unique<Scaled>(sca1));
+	shapeVec2.push_back(make_unique<Square>(squ2));
 
-	Horizontal hor(shapeVec2);
+	Horizontal hor(std::move(shapeVec2));
 
 	std::string horString = hor.generatePostScript();
 
@@ -153,7 +162,13 @@ int main() {
 	ofsCirc << "\n";
 	ofsCirc << "showpage\n";
 
-	Vertical ver(shapeVec2);
+	std::vector<unique_ptr<Shape>> shapeVec3;
+	shapeVec3.push_back(make_unique<Circle>(circ3));
+	shapeVec3.push_back(make_unique<Square>(squ2));
+	shapeVec3.push_back(make_unique<Triangle>(tri1));
+	shapeVec3.push_back(make_unique<Scaled>(sca1));
+	shapeVec3.push_back(make_unique<Square>(squ2));
+	Vertical ver(std::move(shapeVec3));
 
 	std::string verString = ver.generatePostScript();
 	if ((ver.height - totalHeight > 1) || (ver.width - totalWidth > 1) || (ver.height - totalHeight < -1) || (ver.width - circ3.width < -1))
