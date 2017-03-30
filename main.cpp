@@ -51,14 +51,22 @@ int main() {
 		std::cout << "Polygon has incorrect height or width" << std::endl;
 	}
 
-	//std::ofstream ofsPoly;
-	//ofsPoly.open("polyTest.ps", std::ofstream::out | std::ofstream::app);
-	//ofsPoly << "%!\n";
+
 	ofsCirc << polyString;
 	ofsCirc << "\n";
 	ofsCirc << "showpage\n";
-	///ofsPoly.close();
 
+	Rotated rot(p_0, 90);
+	std::string rotString = rot.generatePostScript();
+
+	if (rot.height - 161.803 > 1 || rot.width - 153.884 > 1)
+	{
+		std::cout << "Rotated has incorrect height or width" << std::endl;
+	}
+
+	ofsCirc << rotString;
+	ofsCirc << "\n";
+	ofsCirc << "showpage\n";
 	// *** Square Test ***
 	Square squ(100);
 	std::string squString = squ.generatePostScript();
@@ -128,11 +136,15 @@ int main() {
 	Horizontal hor(shapeVec2);
 
 	std::string horString = hor.generatePostScript();
-	//std::cout << layString << std::endl;
 
-	//	std::ofstream ofsLayer;
-	//ofsLayer.open("layerTest.ps", std::ofstream::out | std::ofstream::app);
-	//ofsLayer << "%!\n";
+	double totalHeight = circ3.height + squ2.height + tri1.height + sca1.height + squ2.height;
+	double totalWidth = circ3.width + squ2.width + tri1.width + sca1.width + squ2.width;
+
+	if ((hor.height - circ3.height > 1) || (hor.width - totalWidth > 1) || (hor.height - circ3.height < -1) || (hor.width - totalWidth < -1))
+	{
+		std::cout << "Horizontal has incorrect height or width" << std::endl;
+	}
+
 	ofsCirc << horString;
 	ofsCirc << "\n";
 	ofsCirc << "showpage\n";
@@ -140,11 +152,11 @@ int main() {
 	Vertical ver(shapeVec2);
 
 	std::string verString = ver.generatePostScript();
-	//std::cout << layString << std::endl;
+	if ((ver.height - totalHeight > 1) || (ver.width - circ3.width > 1) || (ver.height - totalHeight < -1) || (ver.width - circ3.width < -1))
+	{
+		std::cout << "Vertical has incorrect height or width" << std::endl;
+	}
 
-	//	std::ofstream ofsLayer;
-	//ofsLayer.open("layerTest.ps", std::ofstream::out | std::ofstream::app);
-	//ofsLayer << "%!\n";
 	ofsCirc << verString;
 	ofsCirc << "\n";
 	ofsCirc << "showpage\n";

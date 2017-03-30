@@ -283,7 +283,19 @@ private:
 class Rotated : public Shape {
 public:
 	Rotated(Shape &shape, int rotationAngle)
-		:refShape(shape), rotAngle(rotationAngle) {}
+		:refShape(shape), rotAngle(rotationAngle) {
+
+		if (rotationAngle == 90 || rotationAngle == 270)
+		{
+			height = shape.width;
+			width = shape.height;
+		}
+		else
+		{
+			height = shape.height;
+			width = shape.width;
+		}
+	}
 
 	std::string generatePostScript() override
 	{
