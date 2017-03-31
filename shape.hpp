@@ -30,7 +30,7 @@ public:
 	}
 	std::string generatePostScript() override
 	{
-		std::string circleString = "";
+		std::string circleString = "newpath\n";
 		circleString += std::to_string(height / -2);
 		circleString += " ";
 		circleString += std::to_string(width / -2);
@@ -131,7 +131,7 @@ public:
 		halfHeight_ = height / 2.0;
 		halfWidth_ = width / 2.0;
 
-		std::string rectangleString = "";
+		std::string rectangleString = "newpath\n";
 		rectangleString += "0";
 		rectangleString += " ";
 		rectangleString += "0";

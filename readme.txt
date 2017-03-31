@@ -65,6 +65,8 @@ the right of the previous shape with overlapping borders left/right  borders in 
 
 ///// Execution //
 
+Running the project files requires C++14.
+
 main.cpp
 -------------
 
@@ -87,7 +89,7 @@ a vector of unique pointers to shape objects to be passed as a parameter. Genera
 is the same as generating PostScript for basic shape classes.
 
 
-///// Discussion //
+///// Critique //
 
 Question
 -------------
@@ -95,7 +97,8 @@ Is the language expressive enough to create interesting drawings?
 
 Answer
 ----------
-
+The user can create interesting drawings using the circles, rectangles,
+and polygons of different size, rotation, and varrying stacks.
 
 Question
 -------------
@@ -103,7 +106,7 @@ Are the shape abstractions well-designed, or not?
 
 Answer
 ----------
-
+They get the job done, but there are probably neater ways to implement such code.
 
 Question
 -------------
@@ -111,7 +114,7 @@ Do they make certain drawings easy/difficult to create?
 
 Answer
 ----------
-
+Yes, the provided shape tpyes are easy to create. Anything beyond that, however, is difficult.
 
 Question
 -------------
@@ -119,7 +122,8 @@ If you were to design the shape language from scratch, what would you do differe
 
 Answer
 ----------
-
+Make the language even simpler from the user's perspective and make it clear to the user
+which rotation angles are required to reach certain rotations.
 
 
 ///// Authors //
