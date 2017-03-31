@@ -17,14 +17,13 @@ int main() {
 		std::cout << "Circle has incorrect height or width" << std::endl;
 	}
 
-
-	std::ofstream ofsCirc;
-	ofsCirc.open("circTest.ps", std::ofstream::out | std::ofstream::app);
-	ofsCirc << "%!\n";
-	ofsCirc << circleString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
-	//ofsCirc.close();
+	std::ofstream ofs;
+	ofs.open("tests.ps", std::ofstream::out | std::ofstream::app);
+	ofs << "%!\n";
+	ofs << "216 216 translate\n";
+	ofs << circleString;
+	ofs << "\n";
+	ofs << "showpage\n";
 
 
 	// *** Rectangle Test ***
@@ -35,13 +34,10 @@ int main() {
 		std::cout << "Rectangle has incorrect height or width" << std::endl;
 	}
 
-	//std::ofstream ofsRect;
-	//ofsRect.open("recTest.ps", std::ofstream::out | std::ofstream::app);
-	//ofsRect << "%!\n";
-	ofsCirc << rectangleString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
-	//ofsRect.close();
+	ofs << "144 144 translate\n";
+	ofs << rectangleString;
+	ofs << "\n";
+	ofs << "showpage\n";
 
 	// *** Polygon Test ***
 	Polygon p_0(5, 100);
@@ -51,10 +47,10 @@ int main() {
 		std::cout << "Polygon has incorrect height or width" << std::endl;
 	}
 
-
-	ofsCirc << polyString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
+	ofs << "144 144 translate\n";
+	ofs << polyString;
+	ofs << "\n";
+	ofs << "showpage\n";
 
 	Rotated rot(p_0, 90);
 	std::string rotString = rot.generatePostScript();
@@ -64,9 +60,11 @@ int main() {
 		std::cout << "Rotated has incorrect height or width" << std::endl;
 	}
 
-	ofsCirc << rotString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
+	ofs << "144 144 translate\n";
+	ofs << rotString;
+	ofs << "\n";
+	ofs << "showpage\n";
+
 	// *** Square Test ***
 	Square squ(100);
 	std::string squString = squ.generatePostScript();
@@ -75,38 +73,28 @@ int main() {
 		std::cout << "Square has incorrect height or width" << std::endl;
 	}
 
-	//std::ofstream ofsSqu;
-	//ofsSqu.open("squTest.ps", std::ofstream::out | std::ofstream::app);
-	//ofsSqu << "%!\n";
-	ofsCirc << squString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
-	//ofsSqu.close();
+	ofs << "144 144 translate\n";
+	ofs << squString;
+	ofs << "\n";
+	ofs << "showpage\n";
 
 	// *** Scaled Test ***
 
 	Circle circ(200);
 	std::string circString = circ.generatePostScript();
-	//std::cout << circString << std::endl;
 
 	Scaled s(circ, 0.5, 0.5);
 	std::string scaleString = s.generatePostScript();
-	//std::cout << s.height << std::endl;
+
 	if ((s.height - 200 > 1) || (s.width - 200 > 1) || (s.height - 200 < -1) || (s.width - 200 < -1))
 	{
 		std::cout << "Scaled has incorrect height or width" << std::endl;
 	}
 
-	//std::ofstream ofsScale;
-	//ofsScale.open("scaleTest.ps", std::ofstream::out | std::ofstream::app);
-	//ofsScale << "%!\n";
-	//ofsCirc << circString;
-	//ofsCirc << "\n";
-	//ofsCirc << "showpage\n";
-	ofsCirc << scaleString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
-	//ofsScale.close();
+	ofs << "144 144 translate\n";
+	ofs << scaleString;
+	ofs << "\n";
+	ofs << "showpage\n";
 
 	// *** Layered Test ***
 
@@ -124,12 +112,12 @@ int main() {
 	std::string layString = lay.generatePostScript();
 	std::cout << layString << std::endl;
 
-    //std::ofstream ofsLayer;
-	//ofsLayer.open("layerTest.ps", std::ofstream::out | std::ofstream::app);
-	//ofsLayer << "%!\n";
-	ofsCirc << layString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
+	ofs << "216 216 translate\n";
+	ofs << layString;
+	ofs << "\n";
+	ofs << "showpage\n";
+
+    // *** Horizontal Test ***
 
 	Circle circ3(40);
 	Square squ2(30);
@@ -158,9 +146,12 @@ int main() {
 		std::cout << "Total Height = " << totalHeight << "\n";
 	}
 
-	ofsCirc << horString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
+	ofs << "144 144 translate\n";
+	ofs << horString;
+	ofs << "\n";
+	ofs << "showpage\n";
+
+	// *** Vertical Test ***
 
 	std::vector<unique_ptr<Shape>> shapeVec3;
 	shapeVec3.push_back(make_unique<Circle>(circ3));
@@ -180,13 +171,12 @@ int main() {
 		std::cout << "Total Height = " << totalHeight << "\n";
 	}
 
-	ofsCirc << verString;
-	ofsCirc << "\n";
-	ofsCirc << "showpage\n";
+	ofs << "144 144 translate\n";
+	ofs << verString;
+	ofs << "\n";
+	ofs << "showpage\n";
 
-
-	ofsCirc.close();
-
+	ofs.close();
 
 	return 0;
 }

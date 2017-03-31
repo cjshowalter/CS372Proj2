@@ -250,7 +250,7 @@ public:
 	}
 	std::string generatePostScript()
 	{
-		std::string totalString = "newpath\n";
+		std::string totalString = "";
 		for (unsigned int i = 0; i<shapeList.size(); ++i)
 		{
 			totalString += shapeList[i]->generatePostScript();
@@ -348,7 +348,7 @@ public:
 			vertString += " translate\n";
 			vertString += "\n";
 		}
-		vertString += "showpage\n\n";
+		//vertString += "showpage\n\n";
 		vertString += "% **** VERTICAL END ****\n";
 		return vertString;
 	}
@@ -393,7 +393,7 @@ public:
 			horizontalString += " translate\n";
 			horizontalString += "\n";
 		}
-		horizontalString += "showpage\n\n";
+		//horizontalString += "showpage\n\n";
 		horizontalString += "% **** HORIZONTAL END ****\n";
 		return horizontalString;
 	}

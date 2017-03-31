@@ -79,14 +79,18 @@ shape.h
 To use the basic shape classes, simply create an object of your chosen shape class type following
 the parameter requirements for that class. For example, "c = Circle(2)" creates
 an object c of type Circle with a radius of 2. To generate the PostScript for a shape class,
-simply call upon the generatePostscript function. For example, "c.generatePostscript".
+simply call upon the generatePostscript function and send its output to an ofstream.
+For example, "ofs << c.generatePostscript" creates PostScript text for the shape c
+in the file linked to ofs. To set the origin point of the shape, simply input the
+a translation into the stream before the PostScript generation followed by a new line,
+like "ofs << 72 72 translate\n".
 
 To use the compound shape classes, you must first have created one or more basic shape objects.
 Then you can simply create an object of your chosen shape class type following the parameter
-requirements for that class. For example, "c = Circle(2); r = Scaled(c, 2, 2)" creates a scaled circle of twice
+requirements for that class. For example, "c = Circle(2); s = Scaled(c, 2, 2)" creates a scaled circle of twice
 the width and height of the original. Some of the compound classes, such as Layered, will require
-a vector of unique pointers to shape objects to be passed as a parameter. Generating PostScript for compound shapes
-is the same as generating PostScript for basic shape classes.
+a vector of unique pointers to shape objects to be passed as a parameter. Generating PostScript
+for compound shapes is the same as generating PostScript for basic shape classes.
 
 
 ///// Critique //
