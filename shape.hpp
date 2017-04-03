@@ -322,7 +322,7 @@ public:
 		height=0;
 		width=0;
 		for(unsigned int i=0; i<vertStack.size(); ++i) {
-			height += std::move(vertStack[i]->height);
+			height += std::move((vertStack[i]->height)+1);
 			width += std::move(vertStack[i]->width);
 		}
 	}
@@ -344,7 +344,7 @@ public:
 			vertString += vertStack[i]->generatePostScript();
 			vertString += std::to_string(-maxWidth);
 			vertString += " ";
-			vertString += std::to_string(vertStack[i]->height / 2);
+			vertString += std::to_string((vertStack[i]->height / 2)+1);
 			vertString += " translate\n";
 			vertString += "\n";
 		}
@@ -365,8 +365,8 @@ public:
 		height=0;
 		width=0;
 		for(unsigned int i=0; i<horizontalStack.size(); ++i) {
-			height += horizontalStack[i]->height;
-			width += horizontalStack[i]->width;
+			height += std::move(horizontalStack[i]->height);
+			width += std::move((horizontalStack[i]->width)+1);
 		}
 	}
 
@@ -387,7 +387,7 @@ public:
 			horizontalString += std::to_string(maxHeight);
 			horizontalString += " translate\n";
 			horizontalString += horizontalStack[i]->generatePostScript();
-			horizontalString += std::to_string(horizontalStack[i]->width / 2);
+			horizontalString += std::to_string((horizontalStack[i]->width / 2)+1);
 			horizontalString += " ";
 			horizontalString += std::to_string(-maxHeight);
 			horizontalString += " translate\n";
