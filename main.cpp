@@ -16,7 +16,9 @@ int main() {
 	{
 		std::cout << "Circle has incorrect height or width" << std::endl;
 	}
-
+	else {
+		std::cout << "Circle tests passed" << std::endl;
+	}
 	std::ofstream ofs;
 	ofs.open("tests.ps", std::ofstream::out | std::ofstream::app);
 	ofs << "%!\n";
@@ -33,6 +35,9 @@ int main() {
 	{
 		std::cout << "Rectangle has incorrect height or width" << std::endl;
 	}
+	else {
+		std::cout << "Rectangle tests passed" << std::endl;
+	}
 
 	ofs << "144 144 translate\n";
 	ofs << rectangleString;
@@ -45,6 +50,9 @@ int main() {
 	if (p_0.height - 153.884 > 1 || p_0.width - 161.803 > 1)
 	{
 		std::cout << "Polygon has incorrect height or width" << std::endl;
+	}
+	else {
+		std::cout << "Polygon tests passed" << std::endl;
 	}
 
 	ofs << "144 144 translate\n";
@@ -59,6 +67,9 @@ int main() {
 	{
 		std::cout << "Rotated has incorrect height or width" << std::endl;
 	}
+	else {
+		std::cout << "Rotated tests passed" << std::endl;
+	}
 
 	ofs << "144 144 translate\n";
 	ofs << rotString;
@@ -71,6 +82,9 @@ int main() {
 	if ((squ.height - 100) > 1 || (squ.width - 100 > 1) || (squ.height - 100) < -1 || (squ.width - 100 < -1))
 	{
 		std::cout << "Square has incorrect height or width" << std::endl;
+	}
+	else {
+		std::cout << "Square tests passed" << std::endl;
 	}
 
 	ofs << "144 144 translate\n";
@@ -89,6 +103,9 @@ int main() {
 	if ((s.height - 200 > 1) || (s.width - 200 > 1) || (s.height - 200 < -1) || (s.width - 200 < -1))
 	{
 		std::cout << "Scaled has incorrect height or width" << std::endl;
+	}
+	else {
+		std::cout << "Scaled tests passed" << std::endl;
 	}
 
 	ofs << "144 144 translate\n";
@@ -110,7 +127,7 @@ int main() {
 
 	Layered lay(std::move(shapeVec));
 	std::string layString = lay.generatePostScript();
-	std::cout << layString << std::endl;
+	//std::cout << layString << std::endl;
 
 	ofs << "216 216 translate\n";
 	ofs << layString;
@@ -145,6 +162,9 @@ int main() {
 		std::cout << "Horizontal Height " << hor.height << "\n";
 		std::cout << "Total Height = " << totalHeight << "\n";
 	}
+	else {
+		std::cout << "Horizontal tests passed" << std::endl;
+	}
 
 	ofs << "144 144 translate\n";
 	ofs << horString;
@@ -169,6 +189,9 @@ int main() {
 		std::cout << "Total Width = " << totalWidth << "\n";
 		std::cout << "Vertical Height " << ver.height << "\n";
 		std::cout << "Total Height = " << totalHeight << "\n";
+	}
+	else {
+		std::cout << "Vertical tests passed" << std::endl;
 	}
 
 	ofs << "144 144 translate\n";
