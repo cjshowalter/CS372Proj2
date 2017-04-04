@@ -51,6 +51,8 @@ public:
 	}
 };
 
+//Given a number of sides and a length, create a shape with that number of sides
+//with given length
 class Polygon : public Shape {
 public:
 	Polygon() = default;
@@ -216,23 +218,66 @@ public:
 		return SpacerString;
 	}
 };
-
+//Create a 4 sided polygon with the given side length
 class Square : public Polygon {
 public:
 	Square(double sideLength) : Polygon(4, sideLength) {}
 };
-
+//Create a 3 sided polygon with the given side length
 class Triangle : public Polygon {
 public:
 	Triangle(double sideLength) : Polygon(3, sideLength) {}
 };
 
+class Custom : public Shape
+{
+public:
+	Custom(double sideLength)
+	{
+		width = sideLength;
+		height = sideLength;
+	}
+	std::string generatePostScript()
+	{
+		std::string totalString = "";
+		Square s_0(width);
+		totalString += s_0.generatePostScript();
+
+		totalString += std::to_string(width / 4);
+		totalString += " ";
+		totalString += std::to_string(height / 4);
+		totalString += " translate\n";
+
+		Square s_1(width / 5);
+		totalString += s_1.generatePostScript();
+
+		totalString += std::to_string(-width / 4);
+		totalString += " ";
+		totalString += std::to_string(-height / 4);
+		totalString += " translate\n";
+
+		totalString += std::to_string(-width / 4);
+		totalString += " ";
+		totalString += std::to_string(height / 4);
+		totalString += " translate\n";
+
+		totalString += s_1.generatePostScript();
+
+		totalString += std::to_string(width / 4);
+		totalString += " ";
+		totalString += std::to_string(-height / 4);
+		totalString += " translate\n";
+
+
+		return totalString;
+	}
+};
 class Layered : public Shape
 {
 public:
 	Layered(std::vector<unique_ptr<Shape>> shapeListGiven)
 	{
-        shapeList = std::move(shapeListGiven);
+		shapeList = std::move(shapeListGiven);
 		double width = 0;
 		double height = 0;
 
@@ -319,10 +364,10 @@ public:
 	Vertical(std::vector<unique_ptr<Shape>> vertVec)
 	{
 		vertStack = std::move(vertVec);
-		height=0;
-		width=0;
-		for(unsigned int i=0; i<vertStack.size(); ++i) {
-			height += std::move((vertStack[i]->height)+1);
+		height = 0;
+		width = 0;
+		for (unsigned int i = 0; i<vertStack.size(); ++i) {
+			height += std::move((vertStack[i]->height) + 1);
 			width += std::move(vertStack[i]->width);
 		}
 	}
@@ -344,7 +389,7 @@ public:
 			vertString += vertStack[i]->generatePostScript();
 			vertString += std::to_string(-maxWidth);
 			vertString += " ";
-			vertString += std::to_string((vertStack[i]->height / 2)+1);
+			vertString += std::to_string((vertStack[i]->height / 2) + 1);
 			vertString += " translate\n";
 			vertString += "\n";
 		}
@@ -362,11 +407,11 @@ public:
 	Horizontal(std::vector<unique_ptr<Shape>> horizontalVec)
 	{
 		horizontalStack = std::move(horizontalVec);
-		height=0;
-		width=0;
-		for(unsigned int i=0; i<horizontalStack.size(); ++i) {
+		height = 0;
+		width = 0;
+		for (unsigned int i = 0; i<horizontalStack.size(); ++i) {
 			height += std::move(horizontalStack[i]->height);
-			width += std::move((horizontalStack[i]->width)+1);
+			width += std::move((horizontalStack[i]->width) + 1);
 		}
 	}
 
@@ -387,7 +432,7 @@ public:
 			horizontalString += std::to_string(maxHeight);
 			horizontalString += " translate\n";
 			horizontalString += horizontalStack[i]->generatePostScript();
-			horizontalString += std::to_string((horizontalStack[i]->width / 2)+1);
+			horizontalString += std::to_string((horizontalStack[i]->width / 2) + 1);
 			horizontalString += " ";
 			horizontalString += std::to_string(-maxHeight);
 			horizontalString += " translate\n";

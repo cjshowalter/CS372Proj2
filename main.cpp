@@ -134,7 +134,7 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-    // *** Horizontal Test ***
+	// *** Horizontal Test ***
 
 	Circle circ3(40);
 	Square squ2(30);
@@ -155,11 +155,11 @@ int main() {
 	double totalHeight = circ3.height + squ2.height + tri1.height + sca1.height + squ2.height;
 	double totalWidth = circ3.width + squ2.width + tri1.width + sca1.width + squ2.width;
 
-	if ((hor.height - totalHeight > 1) || (hor.width - (totalWidth+shapeVec2Size) > 1) || (hor.height - circ3.height < -1) || (hor.width - totalWidth < -1))
+	if ((hor.height - totalHeight > 1) || (hor.width - (totalWidth + shapeVec2Size) > 1) || (hor.height - circ3.height < -1) || (hor.width - totalWidth < -1))
 	{
 		std::cout << "Horizontal has incorrect height or width" << std::endl;
 		std::cout << "Horizontal Width = " << hor.width << "\n";
-		std::cout << "Total Width = " << totalWidth+shapeVec2Size << "\n";
+		std::cout << "Total Width = " << totalWidth + shapeVec2Size << "\n";
 		std::cout << "Horizontal Height " << hor.height << "\n";
 		std::cout << "Total Height = " << totalHeight << "\n";
 	}
@@ -184,13 +184,13 @@ int main() {
 	Vertical ver(std::move(shapeVec3));
 
 	std::string verString = ver.generatePostScript();
-	if ((ver.height - (totalHeight+shapeVec3Size) > 1) || (ver.width - totalWidth > 1) || (ver.height - totalHeight < -1) || (ver.width - circ3.width < -1))
+	if ((ver.height - (totalHeight + shapeVec3Size) > 1) || (ver.width - totalWidth > 1) || (ver.height - totalHeight < -1) || (ver.width - circ3.width < -1))
 	{
 		std::cout << "Vertical has incorrect height or width" << std::endl;
 		std::cout << "Vertical Width = " << ver.width << "\n";
 		std::cout << "Total Width = " << totalWidth << "\n";
 		std::cout << "Vertical Height " << ver.height << "\n";
-		std::cout << "Total Height = " << totalHeight+shapeVec3Size << "\n";
+		std::cout << "Total Height = " << totalHeight + shapeVec3Size << "\n";
 	}
 	else {
 		std::cout << "Vertical tests passed" << std::endl;
@@ -201,6 +201,23 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
+	// *** Custom Test ***//
+	int cusNum = 100;
+	Custom cus_0(cusNum);
+
+	if ((squ.height - cusNum) > 1 || (squ.width - cusNum > 1) || (squ.height - cusNum) < -1 || (squ.width - cusNum < -1))
+	{
+		std::cout << "Custom has incorrect height or width" << std::endl;
+	}
+	else {
+		std::cout << "Custom tests passed" << std::endl;
+	}
+
+	std::string customString = cus_0.generatePostScript();
+	ofs << "144 144 translate\n";
+	ofs << customString;
+	ofs << "\n";
+	ofs << "showpage\n";
 	ofs.close();
 
 	return 0;
