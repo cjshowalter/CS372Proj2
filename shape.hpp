@@ -268,6 +268,13 @@ public:
 		totalString += std::to_string(-height / 4);
 		totalString += " translate\n";
 
+		Rectangle r_0(width / 2, height / 4);
+
+		totalString += std::to_string(0);
+		totalString += " ";
+		totalString += std::to_string(-height / 4);
+		totalString += " translate\n";
+        totalString += r_0.generatePostScript();
 
 		return totalString;
 	}

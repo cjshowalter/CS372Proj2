@@ -8,8 +8,8 @@
 #include "shape.hpp"
 
 int main() {
-
-	// *** Circle Test ***
+////////////////////////////////CIRCLE TESTS
+	// *** Class Test ***
 	Circle c(200);
 	std::string circleString = c.generatePostScript();
 	if (c.height != 400 || c.width != 400)
@@ -27,8 +27,8 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-
-	// *** Rectangle Test ***
+////////////////////////////////RECTANGLE TESTS
+	// *** Class Test ***
 	Rectangle r(20, 40);
 	std::string rectangleString = r.generatePostScript();
 	if (r.height != 40 || r.width != 20)
@@ -44,7 +44,8 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Polygon Test ***
+////////////////////////////////POLYGON TESTS
+	// *** Class Test ***
 	Polygon p_0(5, 100);
 	std::string polyString = p_0.generatePostScript();
 	if (p_0.height - 153.884 > 1 || p_0.width - 161.803 > 1)
@@ -76,7 +77,8 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Square Test ***
+////////////////////////////////SQUARE TESTS
+	// *** Class Test ***
 	Square squ(100);
 	std::string squString = squ.generatePostScript();
 	if ((squ.height - 100) > 1 || (squ.width - 100 > 1) || (squ.height - 100) < -1 || (squ.width - 100 < -1))
@@ -92,8 +94,8 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Scaled Test ***
-
+////////////////////////////////SCALED TESTS
+	// *** Class Test ***
 	Circle circ(200);
 	std::string circString = circ.generatePostScript();
 
@@ -113,8 +115,8 @@ int main() {
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Layered Test ***
-
+////////////////////////////////LAYERED TESTS
+	// *** Class Test ***
 	Circle circ2(100);
 
 	Rectangle rect(40, 60);
@@ -127,14 +129,13 @@ int main() {
 
 	Layered lay(std::move(shapeVec));
 	std::string layString = lay.generatePostScript();
-	//std::cout << layString << std::endl;
 
 	ofs << "216 216 translate\n";
 	ofs << layString;
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Horizontal Test ***
+////////////////////////////////HORIZONTAL TESTS
 
 	Circle circ3(40);
 	Square squ2(30);
@@ -142,7 +143,7 @@ int main() {
 	Scaled sca1(circ3, 0.7, 0.7);
 	bool allHorPassed = true;
 	std::cout << "\nHorizontal Tests:\n";
-	
+
 	// **** Horizontal test for 0 shapes ****
 	double horTotalHeight0 = 0;
 	double horTotalWidth0 = 0;
@@ -150,8 +151,8 @@ int main() {
 	int horTest0Size = horTest0.size();
 	Horizontal horTest0Shape(std::move(horTest0));
 
-	if ((horTest0Shape.height - (horTotalHeight0 + horTest0Size) > 1) || 
-		(horTest0Shape.width - horTotalWidth0 > 1) || 
+	if ((horTest0Shape.height - (horTotalHeight0 + horTest0Size) > 1) ||
+		(horTest0Shape.width - horTotalWidth0 > 1) ||
 		(horTest0Shape.height - horTotalHeight0 < -1))
 	{
 		std::cout << "\nNo (0) shape horizontal has incorrect height or width" << std::endl;
@@ -173,9 +174,9 @@ int main() {
 	int horTest1Size = horTest1.size();
 	Horizontal horTest1Shape(std::move(horTest1));
 
-	if ((horTest1Shape.height - (horTotalHeight1) > 1) || 
-		(horTest1Shape.width - (horTotalWidth1 + horTest1Size) > 1) || 
-		(horTest1Shape.height - horTotalHeight1 < -1) || 
+	if ((horTest1Shape.height - (horTotalHeight1) > 1) ||
+		(horTest1Shape.width - (horTotalWidth1 + horTest1Size) > 1) ||
+		(horTest1Shape.height - horTotalHeight1 < -1) ||
 		(horTest1Shape.width - circ3.width < -1))
 	{
 		std::cout << "\nOne shape horizontal has incorrect height or width" << std::endl;
@@ -202,9 +203,9 @@ int main() {
 	Horizontal horTest2Shape(std::move(horTest2));
 
 	std::string horString = horTest2Shape.generatePostScript();
-	if ((horTest2Shape.height - horTotalHeight2 > 1) || 
-		(horTest2Shape.width - (horTotalWidth2 + horTest2Size) > 1) || 
-		(horTest2Shape.height - horTotalHeight2 < -1) || 
+	if ((horTest2Shape.height - horTotalHeight2 > 1) ||
+		(horTest2Shape.width - (horTotalWidth2 + horTest2Size) > 1) ||
+		(horTest2Shape.height - horTotalHeight2 < -1) ||
 		(horTest2Shape.width - circ3.width < -1))
 	{
 		std::cout << "\nFive shape horizontal has incorrect height or width" << std::endl;
@@ -226,12 +227,12 @@ int main() {
 	ofs << horString;
 	ofs << "\n";
 	ofs << "showpage\n";
-	
 
-	// ****************** Vertical Tests ******************
+////////////////////////////////VERTICAL TESTS
 
 	std::cout << "\nVertical Tests:\n";
 	bool allVertPassed = true;
+
 	// **** Vertical test for 0 shapes ****
 	double vertTotalHeight0 = 0;
 	double vertTotalWidth0 = 0;
@@ -239,8 +240,8 @@ int main() {
 	int vertTest0Size = vertTest0.size();
 	Vertical vertTest0Shape(std::move(vertTest0));
 
-	if ((vertTest0Shape.height - (vertTotalHeight0 + vertTest0Size) > 1) || 
-		(vertTest0Shape.width - vertTotalWidth0 > 1) || 
+	if ((vertTest0Shape.height - (vertTotalHeight0 + vertTest0Size) > 1) ||
+		(vertTest0Shape.width - vertTotalWidth0 > 1) ||
 		(vertTest0Shape.height - vertTotalHeight0 < -1))
 	{
 		std::cout << "\nNo (0) shape vertical has incorrect height or width" << std::endl;
@@ -262,9 +263,9 @@ int main() {
 	int vertTest1Size = vertTest1.size();
 	Vertical vertTest1Shape(std::move(vertTest1));
 
-	if ((vertTest1Shape.height - (vertTotalHeight1 + vertTest1Size) > 1) || 
-		(vertTest1Shape.width - vertTotalWidth1 > 1) || 
-		(vertTest1Shape.height - vertTotalHeight1 < -1) || 
+	if ((vertTest1Shape.height - (vertTotalHeight1 + vertTest1Size) > 1) ||
+		(vertTest1Shape.width - vertTotalWidth1 > 1) ||
+		(vertTest1Shape.height - vertTotalHeight1 < -1) ||
 		(vertTest1Shape.width - circ3.width < -1))
 	{
 		std::cout << "\nOne shape vertical has incorrect height or width" << std::endl;
@@ -291,9 +292,9 @@ int main() {
 	Vertical vertTest2Shape(std::move(vertTest2));
 
 	std::string verString = vertTest2Shape.generatePostScript();
-	if ((vertTest2Shape.height - (vertTotalHeight2 + vertTest2Size) > 1) || 
-		(vertTest2Shape.width - vertTotalWidth2 > 1) || 
-		(vertTest2Shape.height - vertTotalHeight2 < -1) || 
+	if ((vertTest2Shape.height - (vertTotalHeight2 + vertTest2Size) > 1) ||
+		(vertTest2Shape.width - vertTotalWidth2 > 1) ||
+		(vertTest2Shape.height - vertTotalHeight2 < -1) ||
 		(vertTest2Shape.width - circ3.width < -1))
 	{
 		std::cout << "\nFive shape vertical has incorrect height or width" << std::endl;
@@ -310,17 +311,18 @@ int main() {
 		std::cout << "All vertical tests passed.\n\n";
 	}
 
-
 	ofs << "144 144 translate\n";
 	ofs << verString;
 	ofs << "\n";
 	ofs << "showpage\n";
 
-	// *** Custom Test ***//
+////////////////////////////////CUSTOM SHAPE TESTS
+
+	// *** Class Test ***//
 	int cusNum = 100;
 	Custom cus_0(cusNum);
 
-	if ((squ.height - cusNum) > 1 || (squ.width - cusNum > 1) || 
+	if ((squ.height - cusNum) > 1 || (squ.width - cusNum > 1) ||
 		(squ.height - cusNum) < -1 || (squ.width - cusNum < -1))
 	{
 		std::cout << "Custom has incorrect height or width" << std::endl;
