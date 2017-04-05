@@ -140,6 +140,8 @@ int main() {
 	Square squ2(30);
 	Triangle tri1(30);
 	Scaled sca1(circ3, 0.7, 0.7);
+	bool allHorPassed = true;
+	std::cout << "\nHorizontal Tests:\n";
 	
 	// **** Horizontal test for 0 shapes ****
 	double horTotalHeight0 = 0;
@@ -157,6 +159,7 @@ int main() {
 		std::cout << "Total Width = " << horTotalWidth0 << "\n";
 		std::cout << "Horizontal Height = " << horTest0Shape.height << "\n";
 		std::cout << "Total Height = " << horTotalHeight0 + horTest0Size << "\n\n";
+		allHorPassed = false;
 	}
 	else {
 		std::cout << "No (0) shape horizontal test passed" << std::endl;
@@ -180,6 +183,7 @@ int main() {
 		std::cout << "Total Width = " << horTotalWidth1 + horTest1Size << "\n";
 		std::cout << "Horizontal Height = " << horTest1Shape.height << "\n";
 		std::cout << "Total Height = " << horTotalHeight1 << "\n\n";
+		allHorPassed = false;
 	}
 	else {
 		std::cout << "One shape horizontal test passed" << std::endl;
@@ -208,9 +212,13 @@ int main() {
 		std::cout << "Total Width = " << horTotalWidth2 + horTest2Size << "\n";
 		std::cout << "Horizontal Height = " << horTest2Shape.height << "\n";
 		std::cout << "Total Height = " << horTotalHeight2 << "\n\n";
+		allHorPassed = false;
 	}
 	else {
 		std::cout << "Five shape horizontal test passed" << std::endl;
+	}
+	if(allHorPassed) {
+		std::cout << "All horizontal tests passed.\n";
 	}
 
 
@@ -222,6 +230,8 @@ int main() {
 
 	// ****************** Vertical Tests ******************
 
+	std::cout << "\nVertical Tests:\n";
+	bool allVertPassed = true;
 	// **** Vertical test for 0 shapes ****
 	double vertTotalHeight0 = 0;
 	double vertTotalWidth0 = 0;
@@ -238,6 +248,7 @@ int main() {
 		std::cout << "Total Width = " << vertTotalWidth0 << "\n";
 		std::cout << "Vertical Height = " << vertTest0Shape.height << "\n";
 		std::cout << "Total Height = " << vertTotalHeight0 + vertTest0Size << "\n\n";
+		allVertPassed=false;
 	}
 	else {
 		std::cout << "No (0) shape vertical test passed" << std::endl;
@@ -261,6 +272,7 @@ int main() {
 		std::cout << "Total Width = " << vertTotalWidth1 << "\n";
 		std::cout << "Vertical Height = " << vertTest1Shape.height << "\n";
 		std::cout << "Total Height = " << vertTotalHeight1 + vertTest1Size << "\n\n";
+		allVertPassed=false;
 	}
 	else {
 		std::cout << "One shape vertical test passed" << std::endl;
@@ -288,10 +300,14 @@ int main() {
 		std::cout << "Vertical Width = " << vertTest2Shape.width << "\n";
 		std::cout << "Total Width = " << vertTotalWidth2 << "\n";
 		std::cout << "Vertical Height = " << vertTest2Shape.height << "\n";
-		std::cout << "Total Height = " << vertTotalHeight2 + vertTest2Size << "\n\n";
+		std::cout << "Total Height = " << vertTotalHeight2 + vertTest2Size << "\n";
+		allVertPassed=false;
 	}
 	else {
 		std::cout << "Five shape vertical test passed" << std::endl;
+	}
+	if(allVertPassed) {
+		std::cout << "All vertical tests passed.\n\n";
 	}
 
 
