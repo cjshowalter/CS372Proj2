@@ -140,61 +140,160 @@ int main() {
 	Square squ2(30);
 	Triangle tri1(30);
 	Scaled sca1(circ3, 0.7, 0.7);
-	std::vector<unique_ptr<Shape>> shapeVec2;
-	shapeVec2.push_back(make_unique<Circle>(circ3));
-	shapeVec2.push_back(make_unique<Square>(squ2));
-	shapeVec2.push_back(make_unique<Triangle>(tri1));
-	shapeVec2.push_back(make_unique<Scaled>(sca1));
-	shapeVec2.push_back(make_unique<Square>(squ2));
-	int shapeVec2Size = shapeVec2.size();
+	
+	// **** Horizontal test for 0 shapes ****
+	double horTotalHeight0 = 0;
+	double horTotalWidth0 = 0;
+	std::vector<unique_ptr<Shape>> horTest0(0);
+	int horTest0Size = horTest0.size();
+	Horizontal horTest0Shape(std::move(horTest0));
 
-	Horizontal hor(std::move(shapeVec2));
-
-	std::string horString = hor.generatePostScript();
-
-	double totalHeight = circ3.height + squ2.height + tri1.height + sca1.height + squ2.height;
-	double totalWidth = circ3.width + squ2.width + tri1.width + sca1.width + squ2.width;
-
-	if ((hor.height - totalHeight > 1) || (hor.width - (totalWidth + shapeVec2Size) > 1) || (hor.height - circ3.height < -1) || (hor.width - totalWidth < -1))
+	if ((horTest0Shape.height - (horTotalHeight0 + horTest0Size) > 1) || 
+		(horTest0Shape.width - horTotalWidth0 > 1) || 
+		(horTest0Shape.height - horTotalHeight0 < -1))
 	{
-		std::cout << "Horizontal has incorrect height or width" << std::endl;
-		std::cout << "Horizontal Width = " << hor.width << "\n";
-		std::cout << "Total Width = " << totalWidth + shapeVec2Size << "\n";
-		std::cout << "Horizontal Height " << hor.height << "\n";
-		std::cout << "Total Height = " << totalHeight << "\n";
+		std::cout << "\nNo (0) shape horizontal has incorrect height or width" << std::endl;
+		std::cout << "Horizontal Width = " << horTest0Shape.width << "\n";
+		std::cout << "Total Width = " << horTotalWidth0 << "\n";
+		std::cout << "Horizontal Height = " << horTest0Shape.height << "\n";
+		std::cout << "Total Height = " << horTotalHeight0 + horTest0Size << "\n\n";
 	}
 	else {
-		std::cout << "Horizontal tests passed" << std::endl;
+		std::cout << "No (0) shape horizontal test passed" << std::endl;
 	}
+
+	// **** Horizontal test for 1 shape ****
+	double horTotalHeight1 = circ3.height;
+	double horTotalWidth1 = circ3.width;
+	std::vector<unique_ptr<Shape>> horTest1;
+	horTest1.push_back(make_unique<Circle>(circ3));
+	int horTest1Size = horTest1.size();
+	Horizontal horTest1Shape(std::move(horTest1));
+
+	if ((horTest1Shape.height - (horTotalHeight1) > 1) || 
+		(horTest1Shape.width - (horTotalWidth1 + horTest1Size) > 1) || 
+		(horTest1Shape.height - horTotalHeight1 < -1) || 
+		(horTest1Shape.width - circ3.width < -1))
+	{
+		std::cout << "\nOne shape horizontal has incorrect height or width" << std::endl;
+		std::cout << "Horizontal Width = " << horTest1Shape.width << "\n";
+		std::cout << "Total Width = " << horTotalWidth1 + horTest1Size << "\n";
+		std::cout << "Horizontal Height = " << horTest1Shape.height << "\n";
+		std::cout << "Total Height = " << horTotalHeight1 << "\n\n";
+	}
+	else {
+		std::cout << "One shape horizontal test passed" << std::endl;
+	}
+
+	// **** Horizontal test for more than 1 shape ****
+	double horTotalHeight2 = circ3.height + squ2.height + tri1.height + sca1.height + squ2.height;
+	double horTotalWidth2 = circ3.width + squ2.width + tri1.width + sca1.width + squ2.width;
+	std::vector<unique_ptr<Shape>> horTest2;
+	horTest2.push_back(make_unique<Circle>(circ3));
+	horTest2.push_back(make_unique<Square>(squ2));
+	horTest2.push_back(make_unique<Triangle>(tri1));
+	horTest2.push_back(make_unique<Scaled>(sca1));
+	horTest2.push_back(make_unique<Square>(squ2));
+	int horTest2Size = horTest2.size();
+	Horizontal horTest2Shape(std::move(horTest2));
+
+	std::string horString = horTest2Shape.generatePostScript();
+	if ((horTest2Shape.height - horTotalHeight2 > 1) || 
+		(horTest2Shape.width - (horTotalWidth2 + horTest2Size) > 1) || 
+		(horTest2Shape.height - horTotalHeight2 < -1) || 
+		(horTest2Shape.width - circ3.width < -1))
+	{
+		std::cout << "\nFive shape horizontal has incorrect height or width" << std::endl;
+		std::cout << "Horizontal Width = " << horTest2Shape.width << "\n";
+		std::cout << "Total Width = " << horTotalWidth2 + horTest2Size << "\n";
+		std::cout << "Horizontal Height = " << horTest2Shape.height << "\n";
+		std::cout << "Total Height = " << horTotalHeight2 << "\n\n";
+	}
+	else {
+		std::cout << "Five shape horizontal test passed" << std::endl;
+	}
+
 
 	ofs << "144 144 translate\n";
 	ofs << horString;
 	ofs << "\n";
 	ofs << "showpage\n";
+	
 
-	// *** Vertical Test ***
+	// ****************** Vertical Tests ******************
 
-	std::vector<unique_ptr<Shape>> shapeVec3;
-	shapeVec3.push_back(make_unique<Circle>(circ3));
-	shapeVec3.push_back(make_unique<Square>(squ2));
-	shapeVec3.push_back(make_unique<Triangle>(tri1));
-	shapeVec3.push_back(make_unique<Scaled>(sca1));
-	shapeVec3.push_back(make_unique<Square>(squ2));
-	int shapeVec3Size = shapeVec3.size();
-	Vertical ver(std::move(shapeVec3));
+	// **** Vertical test for 0 shapes ****
+	double vertTotalHeight0 = 0;
+	double vertTotalWidth0 = 0;
+	std::vector<unique_ptr<Shape>> vertTest0(0);
+	int vertTest0Size = vertTest0.size();
+	Vertical vertTest0Shape(std::move(vertTest0));
 
-	std::string verString = ver.generatePostScript();
-	if ((ver.height - (totalHeight + shapeVec3Size) > 1) || (ver.width - totalWidth > 1) || (ver.height - totalHeight < -1) || (ver.width - circ3.width < -1))
+	if ((vertTest0Shape.height - (vertTotalHeight0 + vertTest0Size) > 1) || 
+		(vertTest0Shape.width - vertTotalWidth0 > 1) || 
+		(vertTest0Shape.height - vertTotalHeight0 < -1))
 	{
-		std::cout << "Vertical has incorrect height or width" << std::endl;
-		std::cout << "Vertical Width = " << ver.width << "\n";
-		std::cout << "Total Width = " << totalWidth << "\n";
-		std::cout << "Vertical Height " << ver.height << "\n";
-		std::cout << "Total Height = " << totalHeight + shapeVec3Size << "\n";
+		std::cout << "\nNo (0) shape vertical has incorrect height or width" << std::endl;
+		std::cout << "Vertical Width = " << vertTest0Shape.width << "\n";
+		std::cout << "Total Width = " << vertTotalWidth0 << "\n";
+		std::cout << "Vertical Height = " << vertTest0Shape.height << "\n";
+		std::cout << "Total Height = " << vertTotalHeight0 + vertTest0Size << "\n\n";
 	}
 	else {
-		std::cout << "Vertical tests passed" << std::endl;
+		std::cout << "No (0) shape vertical test passed" << std::endl;
 	}
+
+	// **** Vertical test for 1 shape ****
+	double vertTotalHeight1 = circ3.height;
+	double vertTotalWidth1 = circ3.width;
+	std::vector<unique_ptr<Shape>> vertTest1;
+	vertTest1.push_back(make_unique<Circle>(circ3));
+	int vertTest1Size = vertTest1.size();
+	Vertical vertTest1Shape(std::move(vertTest1));
+
+	if ((vertTest1Shape.height - (vertTotalHeight1 + vertTest1Size) > 1) || 
+		(vertTest1Shape.width - vertTotalWidth1 > 1) || 
+		(vertTest1Shape.height - vertTotalHeight1 < -1) || 
+		(vertTest1Shape.width - circ3.width < -1))
+	{
+		std::cout << "\nOne shape vertical has incorrect height or width" << std::endl;
+		std::cout << "Vertical Width = " << vertTest1Shape.width << "\n";
+		std::cout << "Total Width = " << vertTotalWidth1 << "\n";
+		std::cout << "Vertical Height = " << vertTest1Shape.height << "\n";
+		std::cout << "Total Height = " << vertTotalHeight1 + vertTest1Size << "\n\n";
+	}
+	else {
+		std::cout << "One shape vertical test passed" << std::endl;
+	}
+
+	// **** Vertical test for more than 1 shape ****
+	double vertTotalHeight2 = circ3.height + squ2.height + tri1.height + sca1.height + squ2.height;
+	double vertTotalWidth2 = circ3.width + squ2.width + tri1.width + sca1.width + squ2.width;
+	std::vector<unique_ptr<Shape>> vertTest2;
+	vertTest2.push_back(make_unique<Circle>(circ3));
+	vertTest2.push_back(make_unique<Square>(squ2));
+	vertTest2.push_back(make_unique<Triangle>(tri1));
+	vertTest2.push_back(make_unique<Scaled>(sca1));
+	vertTest2.push_back(make_unique<Square>(squ2));
+	int vertTest2Size = vertTest2.size();
+	Vertical vertTest2Shape(std::move(vertTest2));
+
+	std::string verString = vertTest2Shape.generatePostScript();
+	if ((vertTest2Shape.height - (vertTotalHeight2 + vertTest2Size) > 1) || 
+		(vertTest2Shape.width - vertTotalWidth2 > 1) || 
+		(vertTest2Shape.height - vertTotalHeight2 < -1) || 
+		(vertTest2Shape.width - circ3.width < -1))
+	{
+		std::cout << "\nFive shape vertical has incorrect height or width" << std::endl;
+		std::cout << "Vertical Width = " << vertTest2Shape.width << "\n";
+		std::cout << "Total Width = " << vertTotalWidth2 << "\n";
+		std::cout << "Vertical Height = " << vertTest2Shape.height << "\n";
+		std::cout << "Total Height = " << vertTotalHeight2 + vertTest2Size << "\n\n";
+	}
+	else {
+		std::cout << "Five shape vertical test passed" << std::endl;
+	}
+
 
 	ofs << "144 144 translate\n";
 	ofs << verString;
@@ -205,7 +304,8 @@ int main() {
 	int cusNum = 100;
 	Custom cus_0(cusNum);
 
-	if ((squ.height - cusNum) > 1 || (squ.width - cusNum > 1) || (squ.height - cusNum) < -1 || (squ.width - cusNum < -1))
+	if ((squ.height - cusNum) > 1 || (squ.width - cusNum > 1) || 
+		(squ.height - cusNum) < -1 || (squ.width - cusNum < -1))
 	{
 		std::cout << "Custom has incorrect height or width" << std::endl;
 	}
