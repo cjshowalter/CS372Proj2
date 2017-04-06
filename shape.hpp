@@ -268,7 +268,7 @@ public:
 		totalString += std::to_string(-height / 4);
 		totalString += " translate\n";
 
-
+		
 		return totalString;
 	}
 };
