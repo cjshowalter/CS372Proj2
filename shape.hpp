@@ -289,12 +289,11 @@ public:
 		Square teeth(width / 8);
 		double halfTeeth = (width / 8);
 		double quarterTeeth = halfTeeth/2;
-		int totalTeeth = (width / 8) - 4;
 		
 		for (int i = 1; i <= 2; ++i) {
 			int scale = 0;
 			
-			for (int j = 1; j <= totalTeeth/2; ++j) {
+			for (int j = 1; j <= 4; ++j) {
 				if (i==1) {
 					totalString += std::to_string((-width / 4));
 					totalString += " ";
