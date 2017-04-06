@@ -239,6 +239,7 @@ public:
 	}
 	std::string generatePostScript()
 	{
+		// Head
 		std::string totalString = "";
 		Square s_0(width);
 		totalString += s_0.generatePostScript();
@@ -248,6 +249,7 @@ public:
 		totalString += std::to_string(height / 4);
 		totalString += " translate\n";
 
+		// Eyes
 		Square s_1(width / 5);
 		totalString += s_1.generatePostScript();
 
@@ -268,13 +270,73 @@ public:
 		totalString += std::to_string(-height / 4);
 		totalString += " translate\n";
 
-		Rectangle r_0(width / 2, height / 4);
-
+		// Mouth
+		Rectangle mouth((width / 2), (height / 4));
+		
 		totalString += std::to_string(0);
 		totalString += " ";
 		totalString += std::to_string(-height / 4);
 		totalString += " translate\n";
-        totalString += r_0.generatePostScript();
+		
+		totalString += mouth.generatePostScript();
+
+		totalString += std::to_string(0);
+		totalString += " ";
+		totalString += std::to_string(height / 4);
+		totalString += " translate\n";
+
+		// Teeth
+		Square teeth(width / 8);
+		double halfTeeth = (width / 8);
+		double quarterTeeth = halfTeeth/2;
+		int totalTeeth = (width / 8) - 4;
+		
+		for (int i = 1; i <= 2; ++i) {
+			int scale = 0;
+			
+			for (int j = 1; j <= totalTeeth/2; ++j) {
+				if (i==1) {
+					totalString += std::to_string((-width / 4));
+					totalString += " ";
+					totalString += std::to_string((-height / 4));
+					totalString += " translate\n";
+					totalString += std::to_string((quarterTeeth*j) + (quarterTeeth*scale));
+					totalString += " ";
+					totalString += std::to_string(quarterTeeth*i);
+					totalString += " translate\n";
+					totalString += teeth.generatePostScript();
+					totalString += std::to_string((-quarterTeeth*j) - (quarterTeeth*scale));
+					totalString += " ";
+					totalString += std::to_string(-quarterTeeth*i);
+					totalString += " translate\n";
+					totalString += std::to_string((width / 4));
+					totalString += " ";
+					totalString += std::to_string((height / 4));
+					totalString += " translate\n";
+					scale++;
+				}
+				if (i==2) {
+					totalString += std::to_string((-width / 4));
+					totalString += " ";
+					totalString += std::to_string((-height / 4));
+					totalString += " translate\n";
+					totalString += std::to_string((quarterTeeth*j) + (quarterTeeth*scale));
+					totalString += " ";
+					totalString += std::to_string(-quarterTeeth);
+					totalString += " translate\n";
+					totalString += teeth.generatePostScript();
+					totalString += std::to_string((-quarterTeeth*j) - (quarterTeeth*scale));
+					totalString += " ";
+					totalString += std::to_string(quarterTeeth);
+					totalString += " translate\n";
+					totalString += std::to_string((width / 4));
+					totalString += " ";
+					totalString += std::to_string((height / 4));
+					totalString += " translate\n";
+					scale++;	
+				}
+			}
+		}
 		return totalString;
 	}
 };
