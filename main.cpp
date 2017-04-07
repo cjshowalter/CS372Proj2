@@ -159,7 +159,7 @@ int main() {
 	{
 		std::cout << "All tests for Layered Passed\n\n";
 	}
-	std::string layString = lay1.generatePostScript();
+	std::string layString = lay2.generatePostScript();
 
 	ofs << "216 216 translate\n";
 	ofs << layString;
