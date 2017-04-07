@@ -128,6 +128,9 @@ int main() {
 	shapeVec.push_back(make_unique<Polygon>(p_0));
 
 	Layered lay(std::move(shapeVec));
+
+		std::cout << "Width: " << lay.width << "\n";
+		std::cout << "Height: " << lay.height << "\n";
 	std::string layString = lay.generatePostScript();
 
 	ofs << "216 216 translate\n";

@@ -338,8 +338,8 @@ public:
 	Layered(std::vector<unique_ptr<Shape>> shapeListGiven)
 	{
 		shapeList = std::move(shapeListGiven);
-		double width = 0;
-		double height = 0;
+		width = 0;
+		height = 0;
 
 		for (unsigned int i = 0; i<shapeList.size(); ++i)
 		{
