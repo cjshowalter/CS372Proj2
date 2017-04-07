@@ -361,7 +361,26 @@ int main() {
 	ofs << customString;
 	ofs << "\n";
 	ofs << "showpage\n";
+	//ofs.close();
+
+// Messing around with custom shape.
+// NO TESTS FOR THIS
+	std::vector<unique_ptr<Shape>> vertCustom;
+	Polygon body(6, 80);
+	Rectangle neck (30, 25);
+	Custom head(80);
+	vertCustom.push_back(make_unique<Polygon>(body));
+	vertCustom.push_back(make_unique<Rectangle>(neck));
+	vertCustom.push_back(make_unique<Custom>(head));
+	Vertical vertCustomShape(std::move(vertCustom));
+
+	std::string customVertical = vertCustomShape.generatePostScript();
+	ofs << "144 144 translate\n";
+	ofs << customVertical;
+	ofs << "\n";
+	ofs << "showpage\n";
 	ofs.close();
+
 
 	return 0;
 }
