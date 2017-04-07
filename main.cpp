@@ -117,21 +117,49 @@ int main() {
 
 ////////////////////////////////LAYERED TESTS
 	// *** Class Test ***
+	std::cout << "\nLayered Tests:\n";
+
 	Circle circ2(100);
-
 	Rectangle rect(40, 60);
+	Rectangle rect2(10, 2000);//largest height
+	Rectangle rect3(1000, 10);//largest width
 
-	std::vector<unique_ptr<Shape>> shapeVec;
-	shapeVec.push_back(make_unique<Circle>(circ));
-	shapeVec.push_back(make_unique<Circle>(circ2));
-	shapeVec.push_back(make_unique<Square>(squ));
-	shapeVec.push_back(make_unique<Polygon>(p_0));
+	std::vector<unique_ptr<Shape>> shapeVec1; //empty example
+	Layered lay1(std::move(shapeVec1));
 
-	Layered lay(std::move(shapeVec));
+	std::vector<unique_ptr<Shape>> shapeVec2;
+	shapeVec2.push_back(make_unique<Circle>(circ));
+	shapeVec2.push_back(make_unique<Circle>(circ2));
+	shapeVec2.push_back(make_unique<Square>(squ));
+	shapeVec2.push_back(make_unique<Polygon>(p_0));
+	Layered lay2(std::move(shapeVec2));
 
-		std::cout << "Width: " << lay.width << "\n";
-		std::cout << "Height: " << lay.height << "\n";
-	std::string layString = lay.generatePostScript();
+	std::vector<unique_ptr<Shape>> shapeVec3;
+	shapeVec3.push_back(make_unique<Rectangle>(rect2));
+	shapeVec3.push_back(make_unique<Square>(squ));
+	shapeVec3.push_back(make_unique<Rectangle>(rect));
+	shapeVec3.push_back(make_unique<Rectangle>(rect3));
+	Layered lay3(std::move(shapeVec3));
+
+
+
+	if(lay1.height != 0 || lay1.width != 0)
+	{
+		std::cout << "Test 1 Fail, Hight or Width does not equal zero when empty\n";
+	}
+	else if(lay2.height != 400 || lay2.width != 400)
+	{
+		std::cout << "Test 2 Fail, Hight or Width does not equal 400, largest shape circle\n";
+	}
+	else if(lay3.height != 2000 || lay3.width != 1000)
+	{
+		std::cout << "Test 3 Fail, largest Hight and Width exist on different shapes\n";
+	}
+	else
+	{
+		std::cout << "All tests for Layered Passed\n\n";
+	}
+	std::string layString = lay1.generatePostScript();
 
 	ofs << "216 216 translate\n";
 	ofs << layString;
