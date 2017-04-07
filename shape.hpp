@@ -1,5 +1,5 @@
-#ifndef SHAPE_HPP
-#define SHAPE_HPP
+#ifndef SHAPE_HPP_INCLUDED
+#define SHAPE_HPP_INCLUDED
 
 #include <string>
 #include <cmath>
@@ -12,8 +12,6 @@ class Shape {
 
 public:
 	virtual ~Shape() = default;
-	//virtual double height()=0;
-	//virtual double width()=0;
 	virtual std::string generatePostScript() = 0;
 
 	double height;
@@ -93,10 +91,7 @@ public:
 		polyString += std::to_string(height / -2);
 		polyString += " translate\n";
 		polyString += "newpath\n";
-
-		//polyString += std::to_string(width);
-		//polyString += " ";
-		//polyString += " 0 translate\n";
+		
 		polyString += "0 0 moveto\n";
 
 		for (int i = 0; i < numSides_g; i++)
@@ -290,7 +285,7 @@ public:
 		double halfTeeth = (width / 8);
 		double quarterTeeth = halfTeeth/2;
 
-		// Upper Row
+		// Top row of teeth
 		int scale = 0;
 		for (int ii = 1; ii <= 4; ++ii) {
 			totalString += std::to_string((-width / 4));
@@ -312,6 +307,7 @@ public:
 			totalString += " translate\n";
 			scale++;
 		}
+		// Bottom row of teeth
 		scale = 0;
 		for (int ii = 1; ii <= 4; ++ii) {
 			totalString += std::to_string((-width / 4));
@@ -423,42 +419,44 @@ private:
 	int rotAngle;
 };
 
+// Vertical shape class
+// Creates a stack of shapes. Shapes are centered based on the widest shape.
+//		Shapes do not overlap.
 class Vertical : public Shape {
 public:
+	// Ctor from vector of shapes.
+	// Ctor accepts a vector of any size containing pointers to created shapes.
 	Vertical(std::vector<unique_ptr<Shape>> vertVec)
 	{
 		vertStack = std::move(vertVec);
 		height = 0;
 		width = 0;
+		// Find the total height and max width of the vertical shape.
 		for (unsigned int i = 0; i<vertStack.size(); ++i) {
 			height += std::move((vertStack[i]->height) + 1);
-			width += std::move(vertStack[i]->width);
+			// Find max width
+			if (vertStack[i]->width > width) {
+				width = vertStack[i]->width;
+			}
 		}
 	}
 
 	std::string generatePostScript() override {
-		std::string vertString = "\n% **** VERTICAL PS ****\n\n";
-		double maxWidth = 0;
+		std::string vertString = "";
 
+		// Vertical postscript generation loop.
 		for (unsigned int i = 0; i<vertStack.size(); ++i) {
-			if (vertStack[i]->width > maxWidth) {
-				maxWidth = std::move(vertStack[i]->width);
-			}
-		}
-		for (unsigned int i = 0; i<vertStack.size(); ++i) {
-			vertString += std::to_string(maxWidth);
+			vertString += std::to_string(width);
 			vertString += " ";
 			vertString += std::to_string(vertStack[i]->height / 2);
 			vertString += " translate\n";
 			vertString += vertStack[i]->generatePostScript();
-			vertString += std::to_string(-maxWidth);
+			vertString += std::to_string(-width);
 			vertString += " ";
 			vertString += std::to_string((vertStack[i]->height / 2) + 1);
 			vertString += " translate\n";
 			vertString += "\n";
 		}
-		//vertString += "showpage\n\n";
-		vertString += "% **** VERTICAL END ****\n";
 		return vertString;
 	}
 
@@ -466,44 +464,45 @@ private:
 	std::vector<unique_ptr<Shape>> vertStack;
 };
 
+// Horizontal shape class
+// Creates a row of shapes. Shapes are centered based on the tallest shape.
+//		Shapes do not overlap.
 class Horizontal : public Shape {
 public:
+	// Ctor from vector of shapes.
+	// Ctor accepts a vector of any size containing pointers to created shapes.
 	Horizontal(std::vector<unique_ptr<Shape>> horizontalVec)
 	{
 		horizontalStack = std::move(horizontalVec);
 		height = 0;
 		width = 0;
+		// Find max height and total width of horizontal shape.
 		for (unsigned int i = 0; i<horizontalStack.size(); ++i) {
-			height += std::move(horizontalStack[i]->height);
 			width += std::move((horizontalStack[i]->width) + 1);
+			// Find max height
+			if (horizontalStack[i]->height > height) {
+				height = horizontalStack[i]->height;
+			}
 		}
 	}
 
 	std::string generatePostScript() override {
 
-		std::string horizontalString = "\n% **** HORIZONTAL PS ****\n\n";
-		double maxHeight = 0;
+		std::string horizontalString = "";
 
-		for (unsigned int i = 0; i<horizontalStack.size(); ++i) {
-			if (horizontalStack[i]->height > maxHeight) {
-				maxHeight = std::move(horizontalStack[i]->height);
-			}
-		}
-
+		// Horizontal postscript generation loop.
 		for (unsigned int i = 0; i<horizontalStack.size(); ++i) {
 			horizontalString += std::to_string(horizontalStack[i]->width / 2);
 			horizontalString += " ";
-			horizontalString += std::to_string(maxHeight);
+			horizontalString += std::to_string(height);
 			horizontalString += " translate\n";
 			horizontalString += horizontalStack[i]->generatePostScript();
 			horizontalString += std::to_string((horizontalStack[i]->width / 2) + 1);
 			horizontalString += " ";
-			horizontalString += std::to_string(-maxHeight);
+			horizontalString += std::to_string(-height);
 			horizontalString += " translate\n";
 			horizontalString += "\n";
 		}
-		//horizontalString += "showpage\n\n";
-		horizontalString += "% **** HORIZONTAL END ****\n";
 		return horizontalString;
 	}
 
@@ -512,4 +511,4 @@ private:
 
 };
 
-#endif // SHAPE_HPP
+#endif // SHAPE_HPP_INCLUDED
