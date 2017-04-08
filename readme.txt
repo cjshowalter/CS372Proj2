@@ -1,6 +1,10 @@
 readme.txt
 for CS F372 Project 2
 
+Users in project:
+Trace Braxling
+
+
 ///// Files //
 
 main.cpp
