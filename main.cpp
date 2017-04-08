@@ -159,7 +159,7 @@ int main() {
 	{
 		std::cout << "All tests for Layered Passed\n\n";
 	}
-	std::string layString = lay1.generatePostScript();
+	std::string layString = lay2.generatePostScript();
 
 	ofs << "216 216 translate\n";
 	ofs << layString;
@@ -172,6 +172,7 @@ int main() {
 	Square squ2(30);
 	Triangle tri1(15);
 	Scaled sca1(circ3, 0.7, 0.7);
+	Spacer space1(50, 50);
 	bool allHorPassed = true;
 	std::cout << "\nHorizontal Tests:\n";
 
@@ -308,11 +309,11 @@ int main() {
 	}
 
 	// **** Vertical test for more than 1 shape ****
-	double vertTotalHeight2 = circ3.height + squ2.height + tri1.height + sca1.height + squ2.height;
+	double vertTotalHeight2 = circ3.height + space1.height + tri1.height + sca1.height + squ2.height;
 	double vertTotalWidth2 = circ3.width;
 	std::vector<unique_ptr<Shape>> vertTest2;
 	vertTest2.push_back(make_unique<Circle>(circ3));
-	vertTest2.push_back(make_unique<Square>(squ2));
+	vertTest2.push_back(make_unique<Spacer>(space1));
 	vertTest2.push_back(make_unique<Triangle>(tri1));
 	vertTest2.push_back(make_unique<Scaled>(sca1));
 	vertTest2.push_back(make_unique<Square>(squ2));
