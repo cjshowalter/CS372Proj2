@@ -7,7 +7,9 @@
 #include <vector>
 #include "shape.hpp"
 
-int main() {
+
+int main()
+{
 ////////////////////////////////CIRCLE TESTS
 	// *** Class Test ***
 	Circle c(200);
@@ -124,21 +126,21 @@ int main() {
 	Rectangle rect2(10, 2000);//largest height
 	Rectangle rect3(1000, 10);//largest width
 
-	std::vector<unique_ptr<Shape>> shapeVec1; //empty example
+	std::vector<std::shared_ptr<Shape>> shapeVec1; //empty example
 	Layered lay1(std::move(shapeVec1));
 
-	std::vector<unique_ptr<Shape>> shapeVec2;
-	shapeVec2.push_back(make_unique<Circle>(circ));
-	shapeVec2.push_back(make_unique<Circle>(circ2));
-	shapeVec2.push_back(make_unique<Square>(squ));
-	shapeVec2.push_back(make_unique<Polygon>(p_0));
+	std::vector<std::shared_ptr<Shape>> shapeVec2;
+	shapeVec2.push_back(std::make_shared<Circle>(circ));
+	shapeVec2.push_back(std::make_shared<Circle>(circ2));
+	shapeVec2.push_back(std::make_shared<Square>(squ));
+	shapeVec2.push_back(std::make_shared<Polygon>(p_0));
 	Layered lay2(std::move(shapeVec2));
 
-	std::vector<unique_ptr<Shape>> shapeVec3;
-	shapeVec3.push_back(make_unique<Rectangle>(rect2));
-	shapeVec3.push_back(make_unique<Square>(squ));
-	shapeVec3.push_back(make_unique<Rectangle>(rect));
-	shapeVec3.push_back(make_unique<Rectangle>(rect3));
+	std::vector<std::shared_ptr<Shape>> shapeVec3;
+	shapeVec3.push_back(std::make_shared<Rectangle>(rect2));
+	shapeVec3.push_back(std::make_shared<Square>(squ));
+	shapeVec3.push_back(std::make_shared<Rectangle>(rect));
+	shapeVec3.push_back(std::make_shared<Rectangle>(rect3));
 	Layered lay3(std::move(shapeVec3));
 
 
@@ -179,7 +181,7 @@ int main() {
 	// **** Horizontal test for 0 shapes ****
 	double horTotalHeight0 = 0;
 	double horTotalWidth0 = 0;
-	std::vector<unique_ptr<Shape>> horTest0(0);
+	std::vector<std::shared_ptr<Shape>> horTest0(0);
 	int horTest0Size = horTest0.size();
 	Horizontal horTest0Shape(std::move(horTest0));
 
@@ -201,8 +203,8 @@ int main() {
 	// **** Horizontal test for 1 shape ****
 	double horTotalHeight1 = circ3.height;
 	double horTotalWidth1 = circ3.width;
-	std::vector<unique_ptr<Shape>> horTest1;
-	horTest1.push_back(make_unique<Circle>(circ3));
+	std::vector<std::shared_ptr<Shape>> horTest1;
+	horTest1.push_back(std::make_shared<Circle>(circ3));
 	int horTest1Size = horTest1.size();
 	Horizontal horTest1Shape(std::move(horTest1));
 
@@ -225,18 +227,19 @@ int main() {
 	// **** Horizontal test for more than 1 shape ****
 	double horTotalHeight2 = circ3.height;
 	double horTotalWidth2 = circ3.width + squ2.width + tri1.width + sca1.width + squ2.width;
-	std::vector<unique_ptr<Shape>> horTest2;
-	horTest2.push_back(make_unique<Circle>(circ3));
-	horTest2.push_back(make_unique<Square>(squ2));
-	horTest2.push_back(make_unique<Triangle>(tri1));
-	horTest2.push_back(make_unique<Scaled>(sca1));
-	horTest2.push_back(make_unique<Square>(squ2));
+	std::vector<std::shared_ptr<Shape>> horTest2;
+	horTest2.push_back(std::make_shared<Circle>(circ3));
+	horTest2.push_back(std::make_shared<Square>(squ2));
+	horTest2.push_back(std::make_shared<Triangle>(tri1));
+	horTest2.push_back(std::make_shared<Scaled>(sca1));
+	horTest2.push_back(std::make_shared<Square>(squ2));
 	int horTest2Size = horTest2.size();
 	Horizontal horTest2Shape(std::move(horTest2));
 
 	std::string horString = horTest2Shape.generatePostScript();
 	if ((horTotalWidth2 + horTest2Size) != horTest2Shape.width || 
-		horTotalHeight2 != horTest2Shape.height) {
+		horTotalHeight2 != horTest2Shape.height) 
+	{
 		std::cout << "\nFive shape horizontal has incorrect height or width" << std::endl;
 		std::cout << "Horizontal Width = " << horTest2Shape.width << "\n";
 		std::cout << "Total Width = " << horTotalWidth2 + horTest2Size << "\n";
@@ -265,7 +268,7 @@ int main() {
 	// **** Vertical test for 0 shapes ****
 	double vertTotalHeight0 = 0;
 	double vertTotalWidth0 = 0;
-	std::vector<unique_ptr<Shape>> vertTest0(0);
+	std::vector<std::shared_ptr<Shape>> vertTest0(0);
 	int vertTest0Size = vertTest0.size();
 	Vertical vertTest0Shape(std::move(vertTest0));
 
@@ -287,8 +290,8 @@ int main() {
 	// **** Vertical test for 1 shape ****
 	double vertTotalHeight1 = circ3.height;
 	double vertTotalWidth1 = circ3.width;
-	std::vector<unique_ptr<Shape>> vertTest1;
-	vertTest1.push_back(make_unique<Circle>(circ3));
+	std::vector<std::shared_ptr<Shape>> vertTest1;
+	vertTest1.push_back(std::make_shared<Circle>(circ3));
 	int vertTest1Size = vertTest1.size();
 	Vertical vertTest1Shape(std::move(vertTest1));
 
@@ -311,18 +314,19 @@ int main() {
 	// **** Vertical test for more than 1 shape ****
 	double vertTotalHeight2 = circ3.height + space1.height + tri1.height + sca1.height + squ2.height;
 	double vertTotalWidth2 = circ3.width;
-	std::vector<unique_ptr<Shape>> vertTest2;
-	vertTest2.push_back(make_unique<Circle>(circ3));
-	vertTest2.push_back(make_unique<Spacer>(space1));
-	vertTest2.push_back(make_unique<Triangle>(tri1));
-	vertTest2.push_back(make_unique<Scaled>(sca1));
-	vertTest2.push_back(make_unique<Square>(squ2));
+	std::vector<std::shared_ptr<Shape>> vertTest2;
+	vertTest2.push_back(std::make_shared<Circle>(circ3));
+	vertTest2.push_back(std::make_shared<Spacer>(space1));
+	vertTest2.push_back(std::make_shared<Triangle>(tri1));
+	vertTest2.push_back(std::make_shared<Scaled>(sca1));
+	vertTest2.push_back(std::make_shared<Square>(squ2));
 	int vertTest2Size = vertTest2.size();
 	Vertical vertTest2Shape(std::move(vertTest2));
 
 	std::string verString = vertTest2Shape.generatePostScript();
 	if ((vertTotalHeight2 + vertTest2Size) != vertTest2Shape.height || 
-		vertTotalWidth2 != vertTest2Shape.width) {
+		vertTotalWidth2 != vertTest2Shape.width) 
+	{
 		std::cout << "\nFive shape vertical has incorrect height or width" << std::endl;
 		std::cout << "Vertical Width = " << vertTest2Shape.width << "\n";
 		std::cout << "Total Width = " << vertTotalWidth2 << "\n";
@@ -333,7 +337,8 @@ int main() {
 	else {
 		std::cout << "Five shape vertical test passed" << std::endl;
 	}
-	if(allVertPassed) {
+	if(allVertPassed) 
+	{
 		std::cout << "All vertical tests passed.\n\n";
 	}
 
@@ -366,13 +371,13 @@ int main() {
 
 // Messing around with custom shape.
 // NO TESTS FOR THIS
-	std::vector<unique_ptr<Shape>> vertCustom;
+	std::vector<std::shared_ptr<Shape>> vertCustom;
 	Polygon body(6, 80);
 	Rectangle neck (30, 25);
 	Custom head(80);
-	vertCustom.push_back(make_unique<Polygon>(body));
-	vertCustom.push_back(make_unique<Rectangle>(neck));
-	vertCustom.push_back(make_unique<Custom>(head));
+	vertCustom.push_back(std::make_shared<Polygon>(body));
+	vertCustom.push_back(std::make_shared<Rectangle>(neck));
+	vertCustom.push_back(std::make_shared<Custom>(head));
 	Vertical vertCustomShape(std::move(vertCustom));
 
 	std::string customVertical = vertCustomShape.generatePostScript();
